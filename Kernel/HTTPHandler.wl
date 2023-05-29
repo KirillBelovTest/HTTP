@@ -76,7 +76,7 @@ Begin["`Private`"];
 
 HTTPQ[client_SocketObject, message_ByteArray] := 
 Module[{head}, 
-	head = ByteArrayToString[ByteArraySplit[message, $httpEndOfHead -> 1][[1]]]; 
+	head = ByteArrayToString[BytesSplit[message, $httpEndOfHead -> 1][[1]]]; 
 	
 	(*Return: True | False*)
 	And[
@@ -96,7 +96,7 @@ Module[{head},
 
 HTTPLength[client_SocketObject, message_ByteArray] := 
 Module[{head}, 
-	head = ByteArrayToString[ByteArraySplit[message, $httpEndOfHead -> 1][[1]]]; 
+	head = ByteArrayToString[BytesSplit[message, $httpEndOfHead -> 1][[1]]]; 
 
 	(*Return: _Integer*)
 	Which[
@@ -163,7 +163,7 @@ $serializers = <|
 
 parseRequest[message_ByteArray, deserializer_] := 
 Module[{headBytes, head, headline, headers, body, bodyBytes}, 
-	{headBytes, bodyBytes} = ByteArraySplit[message, $httpEndOfHead -> 1]; 
+	{headBytes, bodyBytes} = BytesSplit[message, $httpEndOfHead -> 1]; 
 	head = ByteArrayToString[headBytes]; 
 	
 	headline = First @ StringCases[
