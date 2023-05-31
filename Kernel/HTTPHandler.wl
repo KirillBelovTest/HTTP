@@ -52,15 +52,15 @@ ClearAll["`*"]
 
 
 HTTPQ::usage = 
-"HTTPQ[client, message] check that message was sent via HTTP protocol"; 
+"HTTPQ[client, message] check that message was sent via HTTP protocol."; 
 
 
 HTTPLength::usage = 
-"HTTPLength[client, message] returns expected message length"; 
+"HTTPLength[client, message] returns expected message length."; 
 
 
 HTTPHandler::usage = 
-"HTTPHandler[opts] mutable type for the handling HTTP request"; 
+"HTTPHandler[opts] mutable type for the handling HTTP request."; 
 
 
 (* ::Section::Closed:: *)
