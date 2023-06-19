@@ -6,28 +6,55 @@
 <<KirillBelov`HTTPHandler`
 
 
+(*Internal*)
+
+
+pathToFile[path_String] := FileNameJoin[Flatten[{Directory[], FileNameSplit[path]}]]
+
+
+loadWSP[file_String, query_Association] := StringTemplate[Import[file, "String"]][query]
+
+
+(*TCP*)
+
+
 tcp = TCPServer[]
 
 
 tcp["CompleteHandler", "HTTP"] = HTTPQ -> HTTPLength
-tcp["MessageHandler", "HTTP"] = HTTPQ -> http
+tcp["MessageHandler", "HTTP"]  = HTTPQ -> http
+
+
+(*HTTP*)
 
 
 http = HTTPHandler[]
 
 
-http["MessageHandler", "Index"] = AssocMatchQ[<|"Path" -> "/"|>] -> indexPage
-http["MessageHandler", "Image"] = AssocMatchQ[<|"Path" -> __ ~~ ".png"|>] -> image
-http["MessageHandler", "HTML"] = AssocMatchQ[<|"Path" -> __ ~~ ".html"|>] -> html
+http["MessageHandler", "Index"]  = AssocMatchQ[<|"Path" -> "/"|>]           -> index
+http["MessageHandler", "Image"]  = AssocMatchQ[<|"Path" -> __ ~~ ".png"|>]  -> image
+http["MessageHandler", "Script"] = AssocMatchQ[<|"Path" -> __ ~~ ".js"|>]   -> script
+http["MessageHandler", "HTML"]   = AssocMatchQ[<|"Path" -> __ ~~ ".html"|>] -> html
+http["MessageHandler", "WSP"]    = AssocMatchQ[<|"Path" -> __ ~~ ".wsp"|>]  -> wsp
+http["MessageHandler", "Folder"] = AssocMatchQ[<|"Path" -> "/" ~~ __|>]     -> folder
 
 
-indexPage[_] := "<h1>Index</h1>"
+index[request_Association] := loadWSP[pathToFile["/index.wsp"], request["Query"]]
 
 
-image[request_Association] := Import[FileNameJoin[Flatten[{Directory[], FileNameSplit[request["Path"]]}]]]
+image[request_Association] := Import[pathToFile[request["Path"]]]
 
 
-html[request_Association] := "<html><body><h2>" <> request["Path"] <> "</h2></html></body>"
+script[request_Association] := Import[pathToFile[request["Path"]], "String"]
+
+
+html[request_Association] := Import[pathToFile[request["Path"]], "String"]
+
+
+wsp[request_Association] := loadWSP[pathToFile[request["Path"]], request["Query"]]
+
+
+folder[request_Association] := StringRiffle[Map["<a>" <> # <> "</a>"&] @ FileNames[pathToFile[request["Path"]]], "\n"]
 
 
 listener = SocketListen[8000, tcp@#&]
