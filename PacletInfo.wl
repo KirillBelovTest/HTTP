@@ -13,7 +13,9 @@ PacletObject[
       {
         "Kernel",
         "Root" -> "Kernel",
-        "Context" -> {"KirillBelov`HTTPHandler`"},
+        "Context" -> {
+          {"KirillBelov`HTTPHandler`", "HTTPHandler.wl"}
+        },
         "Symbols" -> {}
       },
       {"Documentation", "Language" -> "English"},

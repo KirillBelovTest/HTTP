@@ -11,21 +11,22 @@
 *)
 
 
-(*+-------------------------------------------------+
-  |                 HTTP HANDLER                    |
-  |                                                 |
-  |               (reseive request)                 |
-  |                       |                         |
-  |            [parse request to assoc]             |
-  |                       |                         |
-  |               <select pipeline>                 |
-  |      /       /        |        \         \      |
-  |     ..   [get..]  [post..]  [delete..]   ..     |
-  |              \        |        /                |
-  |           [create string response]              |
-  |                       |                         |
-  |                {return to tcp}                  |
-  +-------------------------------------------------+*)
+(* ::Program:: *)
+(*+-----------------------------------------------+*)
+(*|                HTTP HANDLER                   |*)
+(*|                                               |*)
+(*|              (reseive request)                |*)
+(*|                      |                        |*)
+(*|           [parse request to assoc]            |*)
+(*|                      |                        |*)
+(*|              <select pipeline>                |*)
+(*|     /       /        |        \         \     |*)
+(*|    ..   [get..]  [post..]  [delete..]   ..    |*)
+(*|             \        |        /               |*)
+(*|          [create string response]             |*)
+(*|                      |                        |*)
+(*|               {return to tcp}                 |*)
+(*+-----------------------------------------------+*)
 
 
 (* ::Section::Closed:: *)
@@ -41,7 +42,10 @@ Once[If[PacletFind["KirillBelov/TCPServer"] === {}, PacletInstall["KirillBelov/T
 (*Begin packge*)
 
 
-BeginPackage["KirillBelov`HTTPHandler`", {"KirillBelov`Objects`", "KirillBelov`Internal`"}]; 
+BeginPackage["KirillBelov`HTTPHandler`", {
+	"KirillBelov`Objects`", 
+	"KirillBelov`Internal`"
+}]; 
 
 
 (* ::Section::Closed:: *)
@@ -113,23 +117,28 @@ Module[{head},
 
 
 CreateType[HTTPHandler, {
-	"Handler" -> <||>, 
-	"Default" -> Function[$errorResponse], 
-	"Deserializer" -> $deserializers, 
-	"Serializer" -> $serializers
+	"MessageHandler" -> <||>, 
+	"DefaultMessageHandler" -> $HTTPDefaultMessageHandler, 
+	"Deserializer" -> $HTTPDeserializer, 
+	"Serializer" -> $HTTPSerializer
 }]; 
 
 
 handler_HTTPHandler[client_SocketObject, message_ByteArray] := 
-Module[{request, pipeline, result}, 
-	(*Reuest: _Association*)
-	request = parseRequest[message, handler["Deserializer"]]; 
+Module[{request, pipeline, result, deserializer, serializer, messageHandler, defaultMessageHandler}, 
+	deserializer = handler["Deserializer"]; 
+	serializer = handler["Serializer"]; 
+	messageHandler = handler["MessageHandler"]; 
+	defaultMessageHandler = handler["DefaultMessageHandler"]; 
+
+	(*Request: _Association*)
+	request = parseRequest[message, deserializer]; 
 
 	(*Result: _String | _Association*)
-	result = ConditionApply[handler["Handler"], handler["Default"]][request]; 
+	result = ConditionApply[messageHandler, defaultMessageHandler][request]; 
 
 	(*Return: _String | _ByteArray*)
-	createResponse[result, handler["Serializer"]]
+	createResponse[result, serializer]
 ]; 
 
 
@@ -144,21 +153,6 @@ $httpEndOfHead = StringToByteArray["\r\n\r\n"];
 
 
 $errorResponse = <|"Code" -> 404, "Body" -> "Not found"|>; 
-
-
-$deserializers = <|
-	"JSON" -> 
-		Function[AssocMatchQ[#1, <|"Content-Type" -> "application/json"|>] -> 
-			Function[ImportByteArray[#2, "RawJSON"]]], 
-	"QueryEncoded" -> 
-		Function[AssocMatchQ[#1, <|"Content-Type" -> "application/x-www-form-urlencoded"|>] -> 
-			Function[Association[URLQueryDecode[ByteArrayToString[#2]]]]]
-|>; 
-
-
-$serializers = <|
-	"Graphic" -> Function[Head[#] == Graphics] -> Function[ExportString[#, "SVG"]]
-|>; 
 
 
 parseRequest[message_ByteArray, deserializer_] := 
@@ -185,7 +179,14 @@ Module[{headBytes, head, headline, headers, body, bodyBytes},
 
 	body = ConditionApply[deserializer, #2&][headers, bodyBytes]; 
 
-	(*Return: _Association*)
+	(*Return: Association[
+		Metod, 
+		Path, 
+		Query, 
+		Version, 
+		Headers, 
+		Body
+	]*)
 	Join[
 		headline, 
 		<|"Headers" -> headers, "Body" -> body|>
@@ -218,6 +219,26 @@ Module[{response = assoc, body, headers},
 	"\r\n\r\n" <> 
 	body
 ]; 
+
+
+(* ::Section::Closed:: *)
+(*Serialization*)
+
+
+$HTTPDeserializer[headers_Association, body_ByteArray] := 
+body; 
+
+
+$HTTPSerializer[expr_] := 
+ToString[expr]; 
+
+
+$HTTPSerializer[image_Image] := 
+ExportString[image, "PNG"]; 
+
+
+$HTTPSerializer[text_String] := 
+text; 
 
 
 (* ::Section::Closed:: *)
