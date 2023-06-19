@@ -9,7 +9,7 @@
 <<KirillBelov`HTTPHandler`
 
 
-SetDirectory[FileNameJoin[{DirectoryName[$InputFileName], "StaticSite"}]]
+SetDirectory[FileNameJoin[{DirectoryName[$InputFileName], "StaticWebsite"}]]
 
 
 (*Internal*)
