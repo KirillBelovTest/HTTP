@@ -1,11 +1,15 @@
 <!-- DOCTYPE HTML -->
 <html>
     <head>
-
+        
     </head>
     <body>
         <h1>Index</h1>
         <*DateString[]*><br/>
         <img src="WL.png" />
+        <div>
+            <div id="js-date">DIV</div>
+            <script src="script.js"></script>
+        </div>
     </body>
 </html>
