@@ -1,6 +1,9 @@
 #!/usr/bin/env wolframscript
 (* ::Package:: *)
 
+(*Init*)
+
+
 <<KirillBelov`Internal`
 <<KirillBelov`TCPServer`
 <<KirillBelov`HTTPHandler`
@@ -40,24 +43,15 @@ http["MessageHandler", "Folder"] = AssocMatchQ[<|"Path" -> "/" ~~ __|>]     -> f
 
 
 index[request_Association] := loadWSP[pathToFile["/index.wsp"], request["Query"]]
-
-
 image[request_Association] := Import[pathToFile[request["Path"]]]
-
-
 script[request_Association] := Import[pathToFile[request["Path"]], "String"]
-
-
 html[request_Association] := Import[pathToFile[request["Path"]], "String"]
-
-
 wsp[request_Association] := loadWSP[pathToFile[request["Path"]], request["Query"]]
-
-
 folder[request_Association] := StringRiffle[Map["<a>" <> # <> "</a>"&] @ FileNames[pathToFile[request["Path"]]], "\n"]
 
 
+(*Start*)
+
+
 listener = SocketListen[8000, tcp@#&]
-
-
 While[True, Pause[0.001]]
