@@ -9,6 +9,9 @@
 <<KirillBelov`HTTPHandler`
 
 
+SetDirectory[FileNameJoin[{DirectoryName[$InputFileName], "StaticSite"}]]
+
+
 (*Internal*)
 
 
