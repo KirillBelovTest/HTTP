@@ -35,7 +35,7 @@ Cell["", "FileManagerTopSpacer",
  CellGroupingRules->{"SectionGrouping", 99},
  TaggingRules->{},
  CellTags->{"FileManagerCell", "FileManager-PacletFiles"},
- CellID->138896709,ExpressionUUID->"44ab6b50-6d72-4110-b298-f761517c51a1"],
+ CellID->138896709,ExpressionUUID->"8c5cdb6e-7862-4a44-8635-6d1169ba0478"],
 
 Cell[TextData[Cell[BoxData[
  InterpretationBox[
@@ -62,7 +62,7 @@ Cell[TextData[Cell[BoxData[
     NotebookDirectory[], "Documentation"}],
   BoxID -> "FileTreePath",
   BaseStyle->{
-   "Text"}]],ExpressionUUID->"2d1c4044-3c78-4f7c-b4c8-78d61dfa2983"]], \
+   "Text"}]],ExpressionUUID->"b0d3ce87-ff59-4a54-9561-53beff18a106"]], \
 "FileManagerDirectory",
  CellMargins->{{Inherited, Inherited}, {Inherited, Inherited}},
  CellGroupingRules->{"SectionGrouping", 100},
@@ -73,7 +73,185 @@ Cell[TextData[Cell[BoxData[
       TemplateBox[{}, "FileManagerDocumentationIconTemplate"]], Background -> 
      None], Inherited}, {Inherited, Inherited}},
  CellTags->{"FileManagerCell", "FileManager-PacletFiles"},
- CellID->951636263,ExpressionUUID->"7fdec28d-4827-4f3f-8841-e02eb7379212"],
+ CellID->951636263,ExpressionUUID->"9fdc6c72-519f-4e46-982c-122a148c0c96"],
+
+Cell[CellGroupData[{
+
+Cell[TextData[Cell[BoxData[
+ InterpretationBox[
+  TagBox[
+   ActionMenuBox["\<\"Examples\"\>", {"\<\"Open/Close Group\"\>":>(
+    SelectionMove[
+      ParentCell[
+       EvaluationCell[]], All, Cell]; FrontEndTokenExecute[
+      EvaluationNotebook[], "OpenCloseGroup"]), "\<\"Open Directory\"\>":>
+    DefinitionNotebookClient`FileTreeOpen[
+     ParentCell[
+      EvaluationCell[]]], "\<\"Un/Mark as Excluded\"\>":>
+    DefinitionNotebookClient`FileTreeExclusionToggle[
+     ParentCell[
+      EvaluationCell[]]], "\<\"Copy Path to Clipboard\"\>":>
+    DefinitionNotebookClient`FileTreeCopy[
+     ParentCell[
+      EvaluationCell[]]]},
+    Appearance->None,
+    BaseStyle->{"Text"}],
+   Annotation[#, 
+    DefinitionNotebookClient`TemplateCells`PackagePrivate`fileDepth[0]]& ],
+  FileNameJoin[{
+    NotebookDirectory[], "Examples"}],
+  BoxID -> "FileTreePath",
+  BaseStyle->{
+   "Text"}]],ExpressionUUID->"10229a10-6e4f-4517-8d48-d3ac55510c5c"]], \
+"FileManagerDirectory",
+ CellMargins->{{Inherited, Inherited}, {Inherited, Inherited}},
+ CellGroupingRules->{"SectionGrouping", 100},
+ TaggingRules->{},
+ CellFrameLabels->{{
+    Cell[
+     BoxData[
+      TemplateBox[{}, "FileManagerDirectoryIconTemplate"]], Background -> 
+     None], Inherited}, {Inherited, Inherited}},
+ CellTags->{"FileManagerCell", "FileManager-PacletFiles"},
+ CellID->509128461,ExpressionUUID->"976b2b71-639e-41b6-80d0-fd2333d7ebdd"],
+
+Cell[CellGroupData[{
+
+Cell[TextData[Cell[BoxData[
+ InterpretationBox[
+  TagBox[
+   ActionMenuBox["\<\"StaticWebsite\"\>", {"\<\"Open/Close Group\"\>":>(
+    SelectionMove[
+      ParentCell[
+       EvaluationCell[]], All, Cell]; FrontEndTokenExecute[
+      EvaluationNotebook[], "OpenCloseGroup"]), "\<\"Open Directory\"\>":>
+    DefinitionNotebookClient`FileTreeOpen[
+     ParentCell[
+      EvaluationCell[]]], "\<\"Un/Mark as Excluded\"\>":>
+    DefinitionNotebookClient`FileTreeExclusionToggle[
+     ParentCell[
+      EvaluationCell[]]], "\<\"Copy Path to Clipboard\"\>":>
+    DefinitionNotebookClient`FileTreeCopy[
+     ParentCell[
+      EvaluationCell[]]]},
+    Appearance->None,
+    BaseStyle->{"Text"}],
+   Annotation[#, 
+    DefinitionNotebookClient`TemplateCells`PackagePrivate`fileDepth[1]]& ],
+  FileNameJoin[{
+    NotebookDirectory[], "Examples", "StaticWebsite"}],
+  BoxID -> "FileTreePath",
+  BaseStyle->{
+   "Text"}]],ExpressionUUID->"bfcc9208-9227-403d-9ee3-712114f692fb"]], \
+"FileManagerDirectory",
+ CellMargins->{{23 + Inherited, Inherited}, {Inherited, Inherited}},
+ CellGroupingRules->{"SectionGrouping", 110},
+ TaggingRules->{},
+ CellFrameLabels->{{
+    Cell[
+     BoxData[
+      TemplateBox[{}, "FileManagerDirectoryIconTemplate"]], Background -> 
+     None], Inherited}, {Inherited, Inherited}},
+ CellTags->{"FileManagerCell", "FileManager-PacletFiles"},
+ CellID->4260770,ExpressionUUID->"d1877c8e-a09e-4529-ab5d-a820c5261d02"],
+
+Cell[BoxData[
+ InterpretationBox[
+  TagBox[
+   TemplateBox[{"\"Index.wsp\"", 
+     FileNameJoin[{
+       NotebookDirectory[], "Examples", "StaticWebsite", "Index.wsp"}]},
+    "FileManagerFileOpenerTemplate"],
+   Annotation[#, 
+    DefinitionNotebookClient`TemplateCells`PackagePrivate`fileDepth[2]]& ],
+  FileNameJoin[{
+    NotebookDirectory[], "Examples", "StaticWebsite", "Index.wsp"}],
+  BoxID -> "FileTreePath",
+  BaseStyle->{"Text"}]], "FileManagerFile",
+ CellMargins->{{46 + Inherited, Inherited}, {Inherited, Inherited}},
+ CellGroupingRules->{"SectionGrouping", 120},
+ TaggingRules->{},
+ CellFrameLabels->{{
+    Cell[
+     BoxData[
+      TemplateBox[{}, "FileManagerHTMLIconTemplate"]], Background -> None], 
+    Inherited}, {Inherited, Inherited}},
+ CellTags->{"FileManagerCell", "FileManager-PacletFiles"},
+ CellID->459197546,ExpressionUUID->"86110dca-fd55-446b-88ca-a88806427a3d"],
+
+Cell[BoxData[
+ InterpretationBox[
+  TagBox[
+   TemplateBox[{"\"script.js\"", 
+     FileNameJoin[{
+       NotebookDirectory[], "Examples", "StaticWebsite", "script.js"}]},
+    "FileManagerFileOpenerTemplate"],
+   Annotation[#, 
+    DefinitionNotebookClient`TemplateCells`PackagePrivate`fileDepth[2]]& ],
+  FileNameJoin[{
+    NotebookDirectory[], "Examples", "StaticWebsite", "script.js"}],
+  BoxID -> "FileTreePath",
+  BaseStyle->{"Text"}]], "FileManagerFile",
+ CellMargins->{{46 + Inherited, Inherited}, {Inherited, Inherited}},
+ CellGroupingRules->{"SectionGrouping", 120},
+ TaggingRules->{},
+ CellFrameLabels->{{
+    Cell[
+     BoxData[
+      TemplateBox[{}, "FileManagerJSIconTemplate"]], Background -> None], 
+    Inherited}, {Inherited, Inherited}},
+ CellTags->{"FileManagerCell", "FileManager-PacletFiles"},
+ CellID->21205816,ExpressionUUID->"23ed0275-7051-4698-9da1-dcdcec5f5948"],
+
+Cell[BoxData[
+ InterpretationBox[
+  TagBox[
+   TemplateBox[{"\"WL.png\"", 
+     FileNameJoin[{
+       NotebookDirectory[], "Examples", "StaticWebsite", "WL.png"}]},
+    "FileManagerFileOpenerTemplate"],
+   Annotation[#, 
+    DefinitionNotebookClient`TemplateCells`PackagePrivate`fileDepth[2]]& ],
+  FileNameJoin[{
+    NotebookDirectory[], "Examples", "StaticWebsite", "WL.png"}],
+  BoxID -> "FileTreePath",
+  BaseStyle->{"Text"}]], "FileManagerFile",
+ CellMargins->{{46 + Inherited, Inherited}, {Inherited, Inherited}},
+ CellGroupingRules->{"SectionGrouping", 120},
+ TaggingRules->{},
+ CellFrameLabels->{{
+    Cell[
+     BoxData[
+      TemplateBox[{}, "FileManagerPNGIconTemplate"]], Background -> None], 
+    Inherited}, {Inherited, Inherited}},
+ CellTags->{"FileManagerCell", "FileManager-PacletFiles"},
+ CellID->44346154,ExpressionUUID->"f41a02e9-79b5-48d0-a854-da1fd8d7525f"]
+}, Closed]],
+
+Cell[BoxData[
+ InterpretationBox[
+  TagBox[
+   TemplateBox[{"\"StaticWebsite.wls\"", 
+     FileNameJoin[{
+       NotebookDirectory[], "Examples", "StaticWebsite.wls"}]},
+    "FileManagerFileOpenerTemplate"],
+   Annotation[#, 
+    DefinitionNotebookClient`TemplateCells`PackagePrivate`fileDepth[1]]& ],
+  FileNameJoin[{
+    NotebookDirectory[], "Examples", "StaticWebsite.wls"}],
+  BoxID -> "FileTreePath",
+  BaseStyle->{"Text"}]], "FileManagerFile",
+ CellMargins->{{23 + Inherited, Inherited}, {Inherited, Inherited}},
+ CellGroupingRules->{"SectionGrouping", 110},
+ TaggingRules->{},
+ CellFrameLabels->{{
+    Cell[
+     BoxData[
+      TemplateBox[{}, "FileManagerWLIconTemplate"]], Background -> None], 
+    Inherited}, {Inherited, Inherited}},
+ CellTags->{"FileManagerCell", "FileManager-PacletFiles"},
+ CellID->32089248,ExpressionUUID->"8177fcb0-b093-4854-b076-e4e7f22717f8"]
+}, Closed]],
 
 Cell[CellGroupData[{
 
@@ -101,7 +279,7 @@ Cell[TextData[Cell[BoxData[
     NotebookDirectory[], "Kernel"}],
   BoxID -> "FileTreePath",
   BaseStyle->{
-   "Text"}]],ExpressionUUID->"0797aa63-d324-4660-9fb5-ff0b4d23710b"]], \
+   "Text"}]],ExpressionUUID->"c1db91e8-8d88-4a99-ba20-44a61c824321"]], \
 "FileManagerDirectory",
  CellMargins->{{Inherited, Inherited}, {Inherited, Inherited}},
  CellGroupingRules->{"SectionGrouping", 100},
@@ -112,7 +290,7 @@ Cell[TextData[Cell[BoxData[
       TemplateBox[{}, "FileManagerKernelIconTemplate"]], Background -> None], 
     Inherited}, {Inherited, Inherited}},
  CellTags->{"FileManagerCell", "FileManager-PacletFiles"},
- CellID->222362910,ExpressionUUID->"027e0a12-8f65-4321-8def-3f1fe263fdf9"],
+ CellID->222362910,ExpressionUUID->"1df7a45c-3586-4137-a2eb-d6ada34c9ef3"],
 
 Cell[BoxData[
  InterpretationBox[
@@ -136,7 +314,7 @@ Cell[BoxData[
       TemplateBox[{}, "FileManagerWLIconTemplate"]], Background -> None], 
     Inherited}, {Inherited, Inherited}},
  CellTags->{"FileManagerCell", "FileManager-PacletFiles"},
- CellID->690924023,ExpressionUUID->"1b4ba2c9-a55d-471f-880d-4e1fc88e9613"]
+ CellID->690924023,ExpressionUUID->"ce5e2d13-dd09-43e3-9204-5f2a2a660a6a"]
 }, Open  ]],
 
 Cell[BoxData[
@@ -161,7 +339,7 @@ Cell[BoxData[
       TemplateBox[{}, "FileManagerUnknownIconTemplate"]], Background -> None],
      Inherited}, {Inherited, Inherited}},
  CellTags->{"FileManagerCell", "FileManager-PacletFiles"},
- CellID->429422540,ExpressionUUID->"c3038ca2-a314-48f4-9c2d-6c2fff9d3fff"],
+ CellID->429422540,ExpressionUUID->"77aba49a-4a0a-4862-9ebc-d3afb4f1548f"],
 
 Cell[BoxData[
  InterpretationBox[
@@ -185,7 +363,7 @@ Cell[BoxData[
       TemplateBox[{}, "FileManagerPacletInfoIconTemplate"]], Background -> 
      None], Inherited}, {Inherited, Inherited}},
  CellTags->{"FileManagerCell", "FileManager-PacletFiles"},
- CellID->184090595,ExpressionUUID->"ef779cad-780d-44bd-8445-77c0ef3e1e29"],
+ CellID->184090595,ExpressionUUID->"e29e6dc5-27ca-4ca7-97fb-228639767ac9"],
 
 Cell[BoxData[
  InterpretationBox[
@@ -209,7 +387,7 @@ Cell[BoxData[
       TemplateBox[{}, "FileManagerTXTIconTemplate"]], Background -> None], 
     Inherited}, {Inherited, Inherited}},
  CellTags->{"FileManagerCell", "FileManager-PacletFiles"},
- CellID->413268356,ExpressionUUID->"fff67aa7-5e46-4840-9df9-52727d08551c"],
+ CellID->413268356,ExpressionUUID->"ec84b2f3-85f8-4562-a610-89b891fa4317"],
 
 Cell[BoxData[
  InterpretationBox[
@@ -233,13 +411,13 @@ Cell[BoxData[
       TemplateBox[{}, "FileManagerNBIconTemplate"]], Background -> None], 
     Inherited}, {Inherited, Inherited}},
  CellTags->{"FileManagerCell", "FileManager-PacletFiles"},
- CellID->326395393,ExpressionUUID->"c4e4491a-4e66-4fe5-87aa-04edf9ba3b68"],
+ CellID->326395393,ExpressionUUID->"fe3f09e8-1be5-435f-956f-ff5cf72564d2"],
 
 Cell["", "FileManagerBottomSpacer",
  CellGroupingRules->{"SectionGrouping", 100},
  TaggingRules->{},
  CellTags->{"FileManagerCell", "FileManager-PacletFiles"},
- CellID->94396506,ExpressionUUID->"08c45647-17ed-4cb1-bbc8-420827162c0e"]
+ CellID->94396506,ExpressionUUID->"4d52973b-4ddf-4348-8abf-0375391041df"]
 }, Open  ]]
 }, Open  ]],
 
@@ -1970,7 +2148,6 @@ Apache-2.0"}, "HyperlinkURL"]}, "RowDefault"]},
             
             TemplateBox[{
              "\"Creative Commons Zero v1.0 Universal\"", "\"\[ThinSpace]\"", 
-              
               TemplateBox[{
                "\"\[RightGuillemet]\"", 
                 "https://resources.wolframcloud.com/PacletRepository/licenses/\
@@ -3318,6 +3495,7 @@ the following:\n\[FilledSmallSquare] Creates persistent local scheduled tasks\
                     ContentPadding -> False], 
                     MouseAppearanceTag["LinkHand"]], ShowStringCharacters -> 
                     True, FontFamily -> "Source Sans Pro"]]], 
+                    
                     ", or similar\n\[FilledSmallSquare] Installs additional \
 paclets or dependencies\n\[FilledSmallSquare] Creates or imports non-public ", 
                     Cell[
@@ -3877,25 +4055,18 @@ Fu6DuJJG2H9mK2QZ3X1Y8rjKVdsLU11Qbnfn/Mae/TiO1RZHs2bny+6Vwq5Sfi8TnHKi+1+K4NOh"]\
   "PacletBuildData" -> {
    "LastBuiltArchive" -> 
     "C:\\Users\\Kirill\\Projects\\HTTPHandler\\build\\KirillBelov__\
-HTTPHandler-1.0.1.paclet", "FileHashes" -> 
-    ByteArray[{56, 67, 58, 120, 156, 115, 228, 212, 13, 86, 115, 201, 79, 46, 
-      205, 77, 205, 43, 73, 44, 201, 204, 207, 211, 119, 205, 75, 207, 201, 
-      44, 206, 208, 247, 204, 75, 73, 173, 208, 47, 78, 77, 7, 73, 21, 199, 
-      27, 58, 50, 233, 6, 179, 5, 231, 151, 22, 37, 167, 22, 179, 248, 229, 
-      231, 165, 2, 185, 33, 137, 69, 233, 169, 37, 62, 217, 118, 142, 28, 237,
-       197, 107, 88, 116, 131, 53, 136, 49, 75, 47, 61, 53, 15, 143, 105, 157,
-       113, 15, 207, 86, 207, 126, 170, 168, 27, 172, 141, 221, 180, 224, 130,
-       212, 156, 28, 18, 156, 39, 164, 45, 159, 85, 202, 123, 215, 64, 55, 88,
-       151, 104, 3, 137, 118, 163, 168, 119, 106, 81, 94, 106, 142, 190, 71, 
-      72, 72, 128, 71, 98, 94, 74, 78, 106, 145, 94, 121, 14, 146, 86, 31, 53,
-       211, 168, 160, 178, 232, 68, 33, 132, 110, 132, 8, 187, 143, 167, 179, 
-      171, 95, 176, 43, 178, 122, 117, 145, 45, 90, 47, 239, 174, 13, 64, 168,
-       71, 136, 240, 6, 36, 38, 231, 164, 150, 120, 230, 165, 229, 163, 217, 
-      146, 107, 102, 48, 227, 231, 102, 7, 85, 132, 46, 132, 136, 32, 68, 151,
-       111, 98, 94, 102, 90, 106, 113, 9, 170, 78, 140, 208, 50, 240, 91, 229,
-       113, 178, 63, 86, 55, 152, 51, 200, 213, 209, 197, 215, 85, 47, 55, 5, 
-      217, 162, 171, 26, 97, 55, 219, 100, 76, 25, 17, 58, 96, 34, 0, 153, 
-      197, 205, 252}]}},
+HTTPHandler-1.0.2.paclet", "FileHashes" -> ByteArray[CompressedData["
+1:eJwBjAFz/iFib1JiAQAAAH8BAAA4Qzp4nHPk1Q1Wc8lPLs1NzStJLMnMz9N3
+zUvPySzO0PfMS0mt0C9OTQdJFccbOjLpBrMF55cWJacWs/jl56UCuSGJRemp
+JT5ewhJej+wOBukGaxBjll56ah4e0zrjHp6tnv1UUTdYG7tpwQWpOTkkOG/C
+PInTT/5vLNcN1iXaQKLdqOBakZhbkJNarB8MMjU5PDWpOLMkFeJlvfLiAiRT
+fBjz2qa5FgZnIgxCiOAyqDi5KLOgRC+rGNmggJMr880UzgUgDEKIyOIwKNxH
+ryAvHdkUZ7s518+YratGmIIQkcJuil55DopDPtnPLyoRn82JMAIhIuqdWpSX
+mqPvERIS4JGYl5KTWgTUjqxbnGvNIvu/p1gRuhEi7D6ezq5+wa7I6tVFtmi9
+vLsWydsIEd6AxOSc1BLPvLR8NFsee2eViq40VkPoQogIQnT5JuZlpqUWl6Dq
+RI/1uC8/ypYWlfHpBnMGuTq6+Lrq5aYgW3RVI+xmm4wpI0IHTAQA7fo7wJHr
+uFQ=
+      "]]}},
 CreateCellID->True,
 DynamicEvaluationTimeout->60,
 TrackCellChangeTimes->False,
@@ -4737,6 +4908,7 @@ AsyncronousResourceInformationUpdates = False,
                 Quiet[
                  
                  Block[{$ContextPath = RSNB`$cp$, 
+                   
                    ResourceSystemClient`$\
 AsyncronousResourceInformationUpdates = False, 
                    DefinitionNotebookClient`$ButtonCodeID = None}, 
@@ -4899,7 +5071,6 @@ AsyncronousResourceInformationUpdates = False,
                 Quiet[
                  
                  Block[{$ContextPath = RSNB`$cp$, 
-                   
                    ResourceSystemClient`$\
 AsyncronousResourceInformationUpdates = False, 
                    DefinitionNotebookClient`$ButtonCodeID = None}, 
@@ -5550,7 +5721,6 @@ AsyncronousResourceInformationUpdates = False,
                 Quiet[
                  
                  Block[{$ContextPath = RSNB`$cp$, 
-                   
                    ResourceSystemClient`$\
 AsyncronousResourceInformationUpdates = False, 
                    DefinitionNotebookClient`$SuppressDynamicEvents = True, 
@@ -5732,6 +5902,7 @@ AsyncronousResourceInformationUpdates = False,
                     Null]; Null]]], "\"Publicly in the cloud\"" :> 
               With[{RSNB`nb$ = InputNotebook[], RSNB`$cp$ = $ContextPath}, 
                 Quiet[
+                 
                  Block[{$ContextPath = RSNB`$cp$, 
                    ResourceSystemClient`$\
 AsyncronousResourceInformationUpdates = False, 
@@ -9045,7 +9216,6 @@ Mn8D1T+bLHr4qqKuQ8bv8LBZfwwdhGSmFwY76zqghzcABAZ3MA==
           FaceForm[
            GrayLevel[0.65098]]], 
          StyleBox[{
-           
            FilledCurveBox[{{{0, 2, 0}, {0, 1, 0}, {0, 1, 0}, {0, 1, 0}, {0, 1,
              0}}}, {{{4., 3.}, {4., 18.}, {13., 18.}, {17., 14.}, {17., 3.}, {
             4., 3.}}}]}, 
@@ -9209,7 +9379,6 @@ Mn8D1T+bLHr4qqKuQ8bv8LBZfwwdhGSmFwY76zqghzcABAZ3MA==
           FaceForm[
            GrayLevel[1.]]], 
          StyleBox[{
-           
            FilledCurveBox[{{{0, 2, 0}, {1, 3, 3}, {1, 3, 3}, {0, 1, 0}, {0, 1,
              0}, {0, 1, 0}}}, {{{13., 18.}, {13., 14.5}, {12.99992, 
             14.367367999999999`}, {13.052580000000003`, 14.240146}, {
@@ -10208,6 +10377,7 @@ directory.\""}, "PacletDirectoryChooserErrorTemplate"]], "AttachedMessage"],
                     If[
                     And[RSNB`nbDir =!= RSNB`oldDir, 
                     MemberQ[$Packages, "PacletResource`DefinitionNotebook`"]], 
+                    
                     With[{RSNB`nb$ = EvaluationNotebook[], 
                     RSNB`$cp$ = $ContextPath}, 
                     Quiet[
@@ -10303,6 +10473,7 @@ directory.\""}, "PacletDirectoryChooserErrorTemplate"]], "AttachedMessage"],
                     With[{RSNB`nb$ = EvaluationNotebook[], 
                     RSNB`$cp$ = $ContextPath}, 
                     Quiet[
+                    
                     Block[{$ContextPath = RSNB`$cp$, 
                     ResourceSystemClient`$\
 AsyncronousResourceInformationUpdates = False, 
@@ -10401,6 +10572,7 @@ directory.\""}, "PacletDirectoryChooserErrorTemplate"]], "AttachedMessage"],
                     RGBColor[0.65098, 0.65098, 0.65098, 1.]}, StripOnInput -> 
                     False], 
                     StyleBox[{
+                    
                     FilledCurveBox[{{{0, 2, 0}, {0, 1, 0}, {0, 1, 0}, {0, 1, 
                     0}}}, {{{4.609, 28.617}, {27.937, 28.617}, {27.937, 
                     5.289}, {4.609, 5.289}, {4.609, 28.617}}}]}, {
@@ -10521,7 +10693,6 @@ directory.\""}, "PacletDirectoryChooserErrorTemplate"]], "AttachedMessage"],
                     RGBColor[0.65098, 0.65098, 0.65098, 1.]}, StripOnInput -> 
                     False], 
                     StyleBox[{
-                    
                     JoinedCurveBox[{{{0, 2, 0}}}, {{{12.383, 16.953}, {20.16, 
                     16.953}}}, CurveClosed -> {0}]}, {
                     JoinForm[{"Miter", 10.}], 
@@ -11764,10 +11935,9 @@ GRPf1sw3cDj8VSOm/5G9w5vAHXKt3IZQ/0HDoQHBFwFFwBcEHxR9zQlGcP3o
           Scaled[1], Automatic}, StripOnInput -> False]& )}], 
    Cell[
     StyleData["AttachedMessage"], Deletable -> True, 
-    CellMargins -> {{60, 40}, {15, 5}}]}, WindowSize -> {573, 645}, 
-  WindowMargins -> {{665, Automatic}, {Automatic, 164}}, Visible -> False, 
-  FrontEndVersion -> "13.2 for Microsoft Windows (64-bit) (January 30, 2023)",
-   StyleDefinitions -> "PrivateStylesheetFormatting.nb"],
+    CellMargins -> {{60, 40}, {15, 5}}]}, Visible -> False, FrontEndVersion -> 
+  "13.2 for Microsoft Windows (64-bit) (January 30, 2023)", StyleDefinitions -> 
+  "PrivateStylesheetFormatting.nb"],
 ExpressionUUID->"54f968bc-4098-4f67-b06b-949e37eaa0a0"
 ]
 
