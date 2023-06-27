@@ -55,12 +55,12 @@ BeginPackage["KirillBelov`HTTPHandler`", {
 ClearAll["`*"]
 
 
-HTTPQ::usage = 
-"HTTPQ[client, message] check that message was sent via HTTP protocol."; 
+HTTPPacketQ::usage = 
+"HTTPPacketQ[client, message] check that message was sent via HTTP protocol."; 
 
 
-HTTPLength::usage = 
-"HTTPLength[client, message] returns expected message length."; 
+HTTPPacketLength::usage = 
+"HTTPPacketLength[client, message] returns expected message length."; 
 
 
 HTTPHandler::usage = 
@@ -75,10 +75,10 @@ Begin["`Private`"];
 
 
 (* ::Section::Closed:: *)
-(*HTTPQ*)
+(*HTTPPacketQ*)
 
 
-HTTPQ[client_SocketObject, message_ByteArray] := 
+HTTPPacketQ[client_SocketObject, message_ByteArray] := 
 Module[{head}, 
 	head = ByteArrayToString[BytesSplit[message, $httpEndOfHead -> 1][[1]]]; 
 	
@@ -95,10 +95,10 @@ Module[{head},
 
 
 (* ::Section::Closed:: *)
-(*HTTPLength*)
+(*HTTPPacketLength*)
 
 
-HTTPLength[client_SocketObject, message_ByteArray] := 
+HTTPPacketLength[client_SocketObject, message_ByteArray] := 
 Module[{head}, 
 	head = ByteArrayToString[BytesSplit[message, $httpEndOfHead -> 1][[1]]]; 
 
@@ -120,25 +120,36 @@ CreateType[HTTPHandler, {
 	"MessageHandler" -> <||>, 
 	"DefaultMessageHandler" -> $HTTPDefaultMessageHandler, 
 	"Deserializer" -> $HTTPDeserializer, 
-	"Serializer" -> $HTTPSerializer
+	"Serializer" -> $HTTPSerializer, 
+	"Logger" -> Automatic
 }]; 
 
 
 handler_HTTPHandler[client_SocketObject, message_ByteArray] := 
-Module[{request, pipeline, result, deserializer, serializer, messageHandler, defaultMessageHandler}, 
+Module[{request, response, pipeline, result, deserializer, serializer, messageHandler, defaultMessageHandler, logger}, 
 	deserializer = handler["Deserializer"]; 
 	serializer = handler["Serializer"]; 
 	messageHandler = handler["MessageHandler"]; 
 	defaultMessageHandler = handler["DefaultMessageHandler"]; 
+	
+	(*Signature: logger[text_String, expr_]*)
+	logger = handler["Logger"]; 
+	logger["Request", message];
 
 	(*Request: _Association*)
 	request = parseRequest[message, deserializer]; 
+	logger["Parsed", request]; 
 
 	(*Result: _String | _Association*)
 	result = ConditionApply[messageHandler, defaultMessageHandler][request]; 
+	logger["Result", result]; 
+
+	(*Result: _String | _ByteArray*)
+	response = createResponse[result, serializer]; 
+	logger["Response", response]; 
 
 	(*Return: _String | _ByteArray*)
-	createResponse[result, serializer]
+	response
 ]; 
 
 
