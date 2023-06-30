@@ -57,7 +57,7 @@
     socket.onmessage = function(event) {
       //create global context
       //callid
-      console.error(event.data);
+    
       const uid = Date.now() + Math.floor(Math.random() * 100);
       var global = {call: uid};
       interpretate(JSON.parse(event.data), {global: global});
