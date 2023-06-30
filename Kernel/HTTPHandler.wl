@@ -31,7 +31,7 @@
 
 (* ::Section::Closed:: *)
 (*Requarements*)
-
+Print["Loading... "<>$InputFileName];
 
 Once[If[PacletFind["KirillBelov/Internal"] === {}, PacletInstall["KirillBelov/Internal"]]]; 
 Once[If[PacletFind["KirillBelov/Objects"] === {}, PacletInstall["KirillBelov/Objects"]]]; 

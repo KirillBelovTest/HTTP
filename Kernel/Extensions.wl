@@ -46,9 +46,10 @@ ImportFileAsText[file_String] :=
 Import[file, "String"]; 
 
 
-ImportFileAsText[request_Association] := 
-ImportFileAsText[URLPathToFileName[request["Path"]]]; 
+ImportFileAsText[request_Association, OptionsPattern[]] := 
+ImportFileAsText[FileNameJoin[{OptionValue["Base"], URLPathToFileName[request["Path"]]}]]; 
 
+Options[ImportFileAsText] = {"Base"->""}
 
 End[]; 
 
