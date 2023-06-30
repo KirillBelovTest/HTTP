@@ -13,4 +13,4 @@ NotebookPromiseKernel[uid_, params_][expr_] := With[{cli = Global`client},
 NotebookEmitt[expr_] := ReleaseHold[expr]
 
 (* polyfills from frontend *)
-FrontSubmit[expr_] := WebSocketBroadcast[server, expr];
+FrontSubmit[expr_] := WebSocketBroadcast[ExportByteArray[expr, "ExpressionJSON"]];

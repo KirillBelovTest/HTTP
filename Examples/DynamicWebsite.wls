@@ -8,6 +8,8 @@
 SetDirectory[FileNameJoin[{DirectoryName[$InputFileName], "DynamicWebsite"}]]
 $PublicDirectory = "public"
 
+RandomWord[]
+
 Get["https://raw.githubusercontent.com/JerryI/tinyweb-mathematica/master/WSP/WSP.wl"]
 
 Get[FileNameJoin[{ParentDirectory[ParentDirectory[]], "Kernel", "HTTPHandler.wl"}]]
@@ -38,7 +40,13 @@ wcp["CompleteHandler", "WebSocket"] = WebSocketPacketQ -> WebSocketPacketLength
 wcp["MessageHandler", "WebSocket"]  = WebSocketPacketQ -> ws
 
 ws = WebSocketHandler[]
+
+WebSocketBroadcast[data_] := Map[WebSocketSend[#, data]&, (ws@Connections)["Elements"]]; 
+WebSocketBroadcast[ws_, data_] := WebSocketBroadcast[data]
+
 ws["MessageHandler", "Evaluate"]  = Function[True] -> evaluate
+
+
 
 evaluate[cl_SocketObject, data_ByteArray] := Block[{Global`client = cl},
     ToExpression[data//ByteArrayToString];

@@ -6,9 +6,7 @@
                                     title = "Template Engine",
                                     desc  = "Easy to use, feels like plain HTML",
                                     hero  = LoadPage["c/code", {
-                                        code = "
-&lsaquo;?wsp Now//TextString ?&rsaquo;
-"<>TextString[Now]
+                                        code = "&lsaquo;?wsp Now//TextString ?&rsaquo;\r\n"<>TextString[Now]
                                     }]
                                 }] ?>
 
