@@ -28,11 +28,11 @@
                                     hero  = LoadPage["c/wordWidget"]
                                 }] ?> 
 
-                                <?wsp LoadPage["c/feature", {
+                                <?wsp (*LoadPage["c/feature", {
                                     title = "Javascript framework",
                                     desc  = "A strong binding between JS ecosystem and Wolfram Language",
-                                    hero  = LoadPage["c/stat"]
-                                }] ?>                                 
+                                    hero  = LoadPage["c/stat"] 
+                                }] *) "" ?>                                 
 
                             </div>
                         </div>

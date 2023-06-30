@@ -8,7 +8,6 @@
 SetDirectory[FileNameJoin[{DirectoryName[$InputFileName], "DynamicWebsite"}]]
 $PublicDirectory = "public"
 
-RandomWord[]
 
 Get["https://raw.githubusercontent.com/JerryI/tinyweb-mathematica/master/WSP/WSP.wl"]
 
@@ -53,6 +52,8 @@ evaluate[cl_SocketObject, data_ByteArray] := Block[{Global`client = cl},
 ]
 
 SocketListen[8005, wcp@#&]
+
+WSPCache["Off"];
 
 StringTemplate["Open your browser on ``"][URLBuild[<|"Scheme" -> "http", 
   "Port" -> httplistener["Socket"]["DestinationPort"], 
