@@ -8,6 +8,7 @@
 SetDirectory[FileNameJoin[{DirectoryName[$InputFileName], "DynamicWebsite"}]]
 $PublicDirectory = "public"
 
+RandomWord[]
 
 Get["https://raw.githubusercontent.com/JerryI/tinyweb-mathematica/master/WSP/WSP.wl"]
 
