@@ -45,7 +45,7 @@ EventsRack[list_] := With[{uid = CreateUUID[]},
                 EventBind[#, handler] 
             ]
         ] &/@ list;
-    ]
+    ];
     EventObject[<|"id"->uid|>]
 ]
 
