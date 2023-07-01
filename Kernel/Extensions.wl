@@ -47,7 +47,7 @@ URLBuild[FileNameSplit[StringTrim[fileName, StartOfString ~~ Directory[]]]];
 ImportFileAsText[file_String] := With[{},
     If[FileExistsQ[file],
         With[{body = Import[file, "String"]},
-            <|"Body"->body, "Code"->200, "Headers"-><|"Content-Type" -> GetMIMEType[file], "Content-Length" -> StringLength[body], "Connection"-> "Keep-Alive", "Keep-Alive" -> "timeout=5, max=1000"|>|> 
+            <|"Body"->body, "Code"->200, "Headers"-><|"Content-Type" -> GetMIMEType[file], "Content-Length" -> StringLength[body], "Connection"-> "Keep-Alive", "Keep-Alive" -> "timeout=5, max=1000", "Cache-Control" -> "max-age=60480"|>|> 
         ]
     ,
         <|"Code"->404|>
