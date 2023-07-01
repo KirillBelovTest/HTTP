@@ -27,7 +27,9 @@ tcp["CompleteHandler", "HTTP"] = HTTPPacketQ -> HTTPPacketLength
 tcp["MessageHandler", "HTTP"]  = HTTPPacketQ -> http
 
 http = HTTPHandler[]
-http["MessageHandler", "File"]  = GetFileRequestQ[{"html", "css", "js", "png", "jpg", "svg"}] -> (ImportFileAsText[#, "Base"->$PublicDirectory]&)
+http["MessageHandler", "File"]  = GetFileRequestQ[{"html", "css", "js", "png", "jpg", "svg"}] -> (
+  ImportFileAsText[#, "Base"->$PublicDirectory] &
+)
 http["MessageHandler", "WSP"] = GetFileRequestQ[{"wsp"}] -> (HypertextProcess[#, "Base"->$PublicDirectory]&)
 http["MessageHandler", "Index"]  = AssocMatchQ[<|"Path" -> "/"|>] ->  (HypertextProcess[#, "index.wsp", "Base"->$PublicDirectory]&)
 
