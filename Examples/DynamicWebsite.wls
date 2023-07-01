@@ -51,6 +51,8 @@ ws["MessageHandler", "Evaluate"]  = Function[True] -> evaluate
 
 
 evaluate[cl_SocketObject, data_ByteArray] := Block[{Global`client = cl},
+    Print["--------------------------------"];
+    Print[data//ByteArrayToString];
     ToExpression[data//ByteArrayToString];
 ]
 

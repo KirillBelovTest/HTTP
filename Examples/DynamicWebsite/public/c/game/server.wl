@@ -16,6 +16,7 @@ fire[power_] := With[{tag = Symbol[RandomWord[]<>ToString[RandomInteger[200]]], 
   
     Placed[holder, FindMetaMarker["field"]//First] // Hold // FrontSubmit
   ];
+
 ]
 
 ClearAll[trace];

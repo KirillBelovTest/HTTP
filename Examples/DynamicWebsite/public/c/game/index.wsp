@@ -15,5 +15,5 @@ Graphics[{
     }, Hold[aimAngle + 1.570]],
   
     {Gray, Line[{{0,0},With[{x = aimAngle}, {Cos[x], -Sin[x]}]//Hold}], Opacity[0.5], RGBColor@@({77, 82, 83}/255), PointSize[0.1], EventHandler[Point[{0,0}], {"dragall" -> MoveAim}]}
-  }, PlotRange->{{-1,5.2},{-1,3}}, "TransitionType"->"Linear", "TransitionDuration"->200] // Plant
+  }, PlotRange->{{-1,5.2},{-1,3}}, "TransitionType"->"Linear", "TransitionDuration"->100] // Plant
 ?>

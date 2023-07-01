@@ -33,7 +33,7 @@ EventObject[assoc_][handler_] := (EventHandlers[assoc["id"] ] = handler;);
 
 EmittedEvent[EventObject[assoc_], data_] := EventHandlers[assoc["id"]][data];
 
-EmittedEvent[id_String, data_] := EventHandlers[id][data];
+EmittedEvent[id_String, data_] := ( EventHandlers[id][data]);
 
 EventRemove[EventObject[assoc_]] ^:= (With[{id = assoc["id"]}, Unset[ EventHandlers[id] ] ]);
 
