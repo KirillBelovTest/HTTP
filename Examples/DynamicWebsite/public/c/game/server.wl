@@ -16,10 +16,6 @@ fire[power_] := With[{tag = Symbol[RandomWord[]<>ToString[RandomInteger[5]]], bu
   
     Placed[holder, FindMetaMarker["field"]//First] // Hold // FrontSubmit
   ];
-
- 
-
-  SessionSubmit[ScheduledTask[trace[tag//Unevaluated, bullet//Unevaluated, vel//Unevaluated, a, power, trace[tag//Unevaluated, "time"]], {Quantity[0.05, "Second"]}]];
 ]
 
 ClearAll[trace];

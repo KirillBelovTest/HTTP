@@ -14,7 +14,7 @@
         <script type="module" src="https://cdn.jsdelivr.net/gh/JerryI/wljs-interpreter@master/src/interpreter.js"></script>
         <script type="module" src="https://cdn.jsdelivr.net/gh/JerryI/wljs-interpreter@latest/src/core.js"></script>
         <script type="module" src="https://cdn.jsdelivr.net/gh/JerryI/wljs-interpreter@latest/src/metamarkers.js"></script>
-        <script type="module" src="https://cdn.jsdelivr.net/gh/JerryI/wljs-graphics-d3@latest/dist/kernel.js"></script>
+        <script type="module" src="https://cdn.jsdelivr.net/gh/JerryI/wljs-graphics-d3@master/dist/kernel.js"></script>
         <script type="module" src="https://cdn.jsdelivr.net/gh/JerryI/wljs-plotly@latest/dist/kernel_.js"></script>
         <script type="module" src="https://cdn.jsdelivr.net/gh/JerryI/wljs-inputs@latest/dist/kernel.js"></script>
 </head>
