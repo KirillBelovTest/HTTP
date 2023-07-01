@@ -25,12 +25,20 @@ ImportFileAsText::usage =
 GetMIMEType::usage = 
 "GetMIMEType[request] returns mime type based on a file extension"
 
+GetPOSTRequestQ::usage = 
+"GetPOSTRequestQ[fileType] returns function for checking that is a Post request and path contatins file."
+
+ProcessMultipart::usage = 
+"ProcessMultipart[request] returns processed request with a POST data decrypted"
+
 Begin["`Private`"];
 
 
 GetFileRequestQ[fileType: _String | {__String} | _StringExpression] := 
 AssocMatchQ[<|"Method" -> "GET", "Path" -> "/" ~~ ___ ~~ "." ~~ fileType|>]; 
 
+GetPOSTRequestQ[fileType: _String | {__String} | _StringExpression] := 
+AssocMatchQ[<|"Method" -> "POST", "Path" -> "/" ~~ ___ ~~ "." ~~ fileType|>];
 
 URLPathToFileName[urlPath_String] := 
 FileNameJoin[FileNameSplit[StringTrim[urlPath, "/"]]]; 
@@ -103,7 +111,20 @@ GetMIMEType[file_String] := Module[{type},
 
 GetMIMEType[request_Association] := GetMIMEType[URLPathToFileName[request["Path"]]]
 
+$DeserializeUrlencoded[headers_Association, body_ByteArray] := (
+    <|<|URLParse["/?" <> (body//ByteArrayToString)]|>["Query"]|>
+)
 
+ProcessMultipart[request_Association, OptionsPattern[]] := Module[{},
+    (* Return request_Association *)
+
+    If[request["Headers"]["Content-Type"] === "application/x-www-form-urlencoded",
+        Return[Join[request, <|"Data"->$DeserializeUrlencoded[request, request["Body"]], "Body"->{}|>]]
+    ];
+
+    (*Content-Type: multipart/form-data; boundary=AaB03x*)
+    Print[ByteArrayToString[request["Body"]]];
+]
 
 End[]; 
 
