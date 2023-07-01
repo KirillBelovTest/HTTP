@@ -1,7 +1,7 @@
 aimAngle = 0;
 MoveAim[xy_] := Switch[xy[[1]], "dragged", aimAngle = -ArcTan@@(xy[[2]]), "dragended", fire[Norm[xy//Last]]];
 
-fire[power_] := With[{tag = Symbol[RandomWord[]<>ToString[RandomInteger[5]]], bullet = Symbol[RandomWord[]<>ToString[RandomInteger[5]]], vel =  Symbol[RandomWord[]<>ToString[RandomInteger[5]]], a = aimAngle},
+fire[power_] := With[{tag = Symbol[RandomWord[]<>ToString[RandomInteger[200]]], bullet = Symbol[RandomWord[]<>ToString[RandomInteger[200]]], vel =  Symbol[RandomWord[]<>ToString[RandomInteger[200]]], a = aimAngle},
   tag = {0.2{Cos[a], -Sin[a]}};
   bullet = 0.2{Cos[a], -Sin[a]};
   vel = -180 Degree;
@@ -11,7 +11,7 @@ fire[power_] := With[{tag = Symbol[RandomWord[]<>ToString[RandomInteger[5]]], bu
   With[{holder = {Opacity[0.2], RandomReal[{0,1}, 3] // RGBColor, Line[tag // Hold], 
       
       Translate[MiddlewareHandler[Rotate[{Opacity[1], PointSize[0.05], Brown, Point[{0,0}], Line[{{0,0},{0,0.2}}]}, Hold[vel]],
-    "end"->Function[x, trace[tag//Unevaluated, bullet//Unevaluated, vel//Unevaluated, a, power, trace[tag//Unevaluated, "time"]]; ], "Threshold"->0.1 ], Hold[bullet]]  
+    "end"->Function[x, trace[tag//Unevaluated, bullet//Unevaluated, vel//Unevaluated, a, power, trace[tag//Unevaluated, "time"]]; ], "Threshold"->0.5 ], Hold[bullet]]  
   }},
   
     Placed[holder, FindMetaMarker["field"]//First] // Hold // FrontSubmit

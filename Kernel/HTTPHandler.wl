@@ -214,14 +214,6 @@ createResponse[
 	serializer
 ]; 
 
-createResponse[body_Association, serializer_] := 
-createResponse[
-	Join[<|
-		"Code" -> 200
-	|>, body], 
-	serializer
-]; 
-
 
 createResponse[assoc_Association, serializer_] := 
 Module[{response = assoc, body, headers}, 
@@ -233,6 +225,7 @@ Module[{response = assoc, body, headers},
 	|>];  
 
 	(*Return: _String*)
+
 	StringTemplate["HTTP/1.1 `Code` `Message`\r\n"][response] <> 
 	StringRiffle[KeyValueMap[StringRiffle[{#1, #2}, ": "]&] @ response["Headers"], "\r\n"] <> 
 	"\r\n\r\n" <> 
