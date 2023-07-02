@@ -20,5 +20,10 @@
             <?wsp LoadPage["t/footer.wsp"] ?>
         </div>
     </body>
+    <script>
+        window.addEventListener("WSReady", () =>
+            server.socket.send('WebSocketChannel["jsio"]["Subscribe"]')
+        );
+    </script>    
 </html>
 

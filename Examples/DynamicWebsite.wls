@@ -16,8 +16,10 @@ Get[FileNameJoin[{ParentDirectory[ParentDirectory[]], "Kernel", "HTTPHandler.wl"
 Get[FileNameJoin[{ParentDirectory[ParentDirectory[]], "Kernel", "Extensions.wl"}]]
 Get[FileNameJoin[{ParentDirectory[ParentDirectory[]], "Kernel", "WSPAdapter.wl"}]]
 
+Get["https://raw.githubusercontent.com/JerryI/wl-misc/main/Kernel/Channels.wl"]
+Get["https://raw.githubusercontent.com/JerryI/wl-misc/main/Kernel/Events.wl"]
+
 Get["modules/Hydrator.wl"]
-Get["modules/Events.wl"]
 Get["modules/Polyfill.wl"]
 
 Print["Staring HTTP server..."];
@@ -62,6 +64,9 @@ evaluate[cl_SocketObject, data_ByteArray] := Block[{Global`client = cl},
 SocketListen[8005, wcp@#&]
 
 WSPCache["Off"];
+
+WebSocketChannel[Automatic]["Serializer"] = ExportByteArray[#, "ExpressionJSON"]&
+WebSocketChannel["jsio"]["Serializer"] = ExportByteArray[#, "ExpressionJSON"]&
 
 StringTemplate["Open your browser on ``"][URLBuild[<|"Scheme" -> "http", 
   "Port" -> httplistener["Socket"]["DestinationPort"], 
