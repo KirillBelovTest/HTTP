@@ -1,4 +1,6 @@
 <?wsp
-    session["Redirect"] = "utils/redir.wsp";
-    session["data", "command"]//ToExpression;
+    session["Redirect"] = "/utils/redir.wsp";
+    (* execute BIG command *)
+    
+    session["Data", "command"]//ToExpression;
 ?>

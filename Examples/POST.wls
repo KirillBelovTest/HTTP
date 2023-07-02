@@ -27,7 +27,7 @@ http["MessageHandler", "File"]  = GetFileRequestQ[{"html", "css", "js", "png", "
 http["MessageHandler", "WSP"] = GetFileRequestQ[{"wsp"}] -> (HypertextProcess[#, "Base"->$PublicDirectory]&)
 http["MessageHandler", "Index"]  = AssocMatchQ[<|"Path" -> "/"|>] ->  (HypertextProcess[#, "index.wsp", "Base"->$PublicDirectory]&)
 
-http["MessageHandler", "POST"] = GetPOSTRequestQ[{"wsp"}] -> Composition[Print, ProcessMultipart]
+http["MessageHandler", "Post"] = GetPOSTRequestQ[{"wsp"}] -> Composition[(HypertextProcess[#, "Base"->$PublicDirectory]&), ProcessMultipart]
 
 httplistener = SocketListen[8000, tcp@#&]
 

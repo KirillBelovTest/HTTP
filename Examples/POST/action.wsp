@@ -1,0 +1,9 @@
+<?wsp 
+    If[session["Method"] === "POST",
+        Print["Post data recevied!"];
+        Print[session["Data"]];
+
+        session["Redirect"] = "index.wsp";
+    ];
+    "Ok!"
+?>
