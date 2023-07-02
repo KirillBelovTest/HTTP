@@ -8,7 +8,7 @@
 SetDirectory[FileNameJoin[{DirectoryName[$InputFileName], "POST"}]]
 $PublicDirectory = ""
 
-Get["https://raw.githubusercontent.com/JerryI/tinyweb-mathematica/master/WSP/WSP.wl"]
+Get["https://raw.githubusercontent.com/JerryI/wl-wsp/main/Kernel/WSP.wl"]
 
 Get[FileNameJoin[{ParentDirectory[ParentDirectory[]], "Kernel", "HTTPHandler.wl"}]]
 Get[FileNameJoin[{ParentDirectory[ParentDirectory[]], "Kernel", "Extensions.wl"}]]
@@ -31,8 +31,7 @@ http["MessageHandler", "Post"] = GetPOSTRequestQ[{"wsp"}] -> Composition[(Hypert
 
 httplistener = SocketListen[8000, tcp@#&]
 
-
-WSPCache["Off"];
+SetOptions[WSPEngine, "Cache"->False];
 
 StringTemplate["Open your browser on ``"][URLBuild[<|"Scheme" -> "http", 
   "Port" -> httplistener["Socket"]["DestinationPort"], 

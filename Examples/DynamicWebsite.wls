@@ -10,7 +10,7 @@ $PublicDirectory = "public"
 
 RandomWord[]
 
-Get["https://raw.githubusercontent.com/JerryI/tinyweb-mathematica/master/WSP/WSP.wl"]
+Get["https://raw.githubusercontent.com/JerryI/wl-wsp/main/Kernel/WSP.wl"]
 
 Get[FileNameJoin[{ParentDirectory[ParentDirectory[]], "Kernel", "HTTPHandler.wl"}]]
 Get[FileNameJoin[{ParentDirectory[ParentDirectory[]], "Kernel", "Extensions.wl"}]]
@@ -48,9 +48,6 @@ wcp["MessageHandler", "WebSocket"]  = WebSocketPacketQ -> ws
 
 ws = WebSocketHandler[]
 
-WebSocketBroadcast[data_] := Map[WebSocketSend[#, data]&, (ws@Connections)["Elements"]]; 
-WebSocketBroadcast[ws_, data_] := WebSocketBroadcast[data]
-
 ws["MessageHandler", "Evaluate"]  = Function[True] -> evaluate
 
 
@@ -63,7 +60,7 @@ evaluate[cl_SocketObject, data_ByteArray] := Block[{Global`client = cl},
 
 SocketListen[8005, wcp@#&]
 
-WSPCache["Off"];
+SetOptions[WSPEngine, "Cache"->False];
 
 WebSocketChannel[Automatic]["Serializer"] = ExportByteArray[#, "ExpressionJSON"]&
 WebSocketChannel["jsio"]["Serializer"] = ExportByteArray[#, "ExpressionJSON"]&

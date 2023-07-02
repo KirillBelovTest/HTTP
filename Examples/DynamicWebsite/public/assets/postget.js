@@ -51,7 +51,7 @@ window.WSPHttpQuery = (command, promise, type = "String") => {
     if (request.readyState === 4) {
       console.log(request.responseText);
 
-        if (request.responseText == 'Nothing') {
+        if (request.responseText == 'Ok!') {
           promise.resolve();
         } else {
           promise.reject();

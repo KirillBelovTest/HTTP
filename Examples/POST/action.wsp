@@ -3,7 +3,7 @@
         Print["Post data recevied!"];
         Print[session["Data"]];
 
-        session["Redirect"] = "index.wsp";
+        session["Redirect"] = "/blank.wsp";
     ];
     "Ok!"
 ?>

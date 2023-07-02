@@ -1,23 +1,23 @@
-BeginPackage["KirillBelov`HTTPHandler`WSPAdapter`", {"WSP`", "KirillBelov`HTTPHandler`Extensions`"}]; 
+BeginPackage["KirillBelov`HTTPHandler`WSPAdapter`", {"JerryI`WSP`", "KirillBelov`HTTPHandler`Extensions`"}]; 
 
 HypertextProcess::usage = 
 "HypertextProcess[request] import file as WSP and process it."; 
-
-session::usage = "session[\"Method\"], session[\"Query\"] ... global access to a session variable inside each request"
 
 Begin["`Private`"];
 
 HypertextProcess[request_Association, OptionsPattern[]] := Module[{body},
 With[{file = URLPathToFileName[request]},
-    Block[{session = <||>, $publicpath = FileNameJoin[{Directory[], OptionValue["Base"]}]},
-        session = request;
-        body = LoadPage[file];
+
+    Block[{Global`session = <||>},
+        Global`session = request;
+        body = LoadPage[file, {}, "Base"->FileNameJoin[{Directory[], OptionValue["Base"]}]];
 
         (* handle special case for redirect *)
 
-        If[KeyExistsQ[session, "Redirect"],
-            <|  "Code"->303, "Body"->body, 
-                "Headers"-> <|"Content-Type" -> GetMIMEType["html"], "Content-Length" -> StringLength[body], "Location" -> session["Redirect"]|>
+        If[KeyExistsQ[Global`session, "Redirect"],
+            Print["Redirecting to "<>Global`session["Redirect"]];
+            <|  "Code"->201, "Body"->body, 
+                "Headers"-> <|"Content-Location" -> Global`session["Redirect"], "Content-Length" -> StringLength[body]|>
             |> // Return
         ];
 
@@ -36,15 +36,16 @@ HypertextProcess[request_Association, OptionsPattern[]] :=
 
 HypertextProcess[request_Association, filename_String, OptionsPattern[]] := Module[{body},
 With[{file = filename},
-    Block[{session = <||>, $publicpath = FileNameJoin[{Directory[], OptionValue["Base"]}]},
-        session = request;
-        body = LoadPage[file];
+    Block[{Global`session = <||>},
+        Global`session = request;
+        body = LoadPage[file, {}, "Base"->FileNameJoin[{Directory[], OptionValue["Base"]}]];
 
         (* handle special case for redirect *)
 
-        If[KeyExistsQ[session, "Redirect"],
-            <|  "Code"->303, "Body"->body, 
-                "Headers"-> <|"Content-Type" -> GetMIMEType["html"], "Content-Length" -> StringLength[body], "Location" -> session["Redirect"]|>
+        If[KeyExistsQ[Global`session, "Redirect"],
+            Print["Redirecting to "<>Global`session["Redirect"]];
+            <|  "Code"->201, "Body"->body, 
+                "Headers"-> <|"Content-Location" -> Global`session["Redirect"], "Content-Length" -> StringLength[body]|>
             |> // Return
         ];
 
