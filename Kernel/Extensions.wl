@@ -52,19 +52,48 @@ FileNameToURLPath[fileName_String] :=
 URLBuild[FileNameSplit[StringTrim[fileName, StartOfString ~~ Directory[]]]]; 
 
 
-ImportFileAsText[file_String] := With[{},
+ImportFileAsText[base_String, name_String] := With[{file = FileNameJoin[{base, name}]},
     If[FileExistsQ[file],
         With[{body = Import[file, "String"]},
             <|"Body"->body, "Code"->200, "Headers"-><|"Content-Type" -> GetMIMEType[file], "Content-Length" -> StringLength[body], "Connection"-> "Keep-Alive", "Keep-Alive" -> "timeout=5, max=1000", "Cache-Control" -> "max-age=60480"|>|> 
         ]
     ,
-        <|"Code"->404|>
+        <|"Code"->404, "Body"->""|>
+    ] 
+]
+
+ImportFileAsText["", file_String] := 
+    If[FileExistsQ[file],
+        With[{body = Import[file, "String"]},
+            <|"Body"->body, "Code"->200, "Headers"-><|"Content-Type" -> GetMIMEType[file], "Content-Length" -> StringLength[body], "Connection"-> "Keep-Alive", "Keep-Alive" -> "timeout=5, max=1000", "Cache-Control" -> "max-age=60480"|>|> 
+        ]
+    ,
+        <|"Code"->404, "Body"->""|>
+    ] 
+
+
+ImportFileAsText[base_List, name_String] := With[{file = Which@@Flatten[Map[
+    With[{path = If[# === "", name, FileNameJoin[{#, name}]]}, 
+    {
+        Unevaluated[Print["checking... "<>#]; path//FileExistsQ],
+        path
+    }] &, base]]},
+
+    If[file =!= Null,
+        With[{body = Import[file, "String"]},
+            <|"Body"->body, "Code"->200, "Headers"-><|"Content-Type" -> GetMIMEType[file], "Content-Length" -> StringLength[body], "Connection"-> "Keep-Alive", "Keep-Alive" -> "timeout=5, max=1000", "Cache-Control" -> "max-age=60480"|>|> 
+        ]
+    ,
+        <|"Code"->404, "Body"->""|>
     ] 
 ]
 
 
-ImportFileAsText[request_Association, OptionsPattern[]] := 
-ImportFileAsText[FileNameJoin[{OptionValue["Base"], URLPathToFileName[request["Path"]]}]]; 
+ImportFileAsText[request_Association, OptionsPattern[]] := (
+ImportFileAsText[OptionValue["Base"], URLPathToFileName[request["Path"]]])
+
+ImportFileAsText[name_String] := 
+ImportFileAsText[URLPathToFileName[name], ""]
 
 Options[ImportFileAsText] = {"Base"->""}
 

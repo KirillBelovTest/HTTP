@@ -6,7 +6,7 @@
 <<KirillBelov`WebSocketHandler`
 
 SetDirectory[FileNameJoin[{DirectoryName[$InputFileName], "DynamicWebsite"}]]
-$PublicDirectory = "public"
+$PathDir := (Print["* IO Operations *"]; {"public", ""});
 
 RandomWord[]
 
@@ -30,12 +30,12 @@ tcp["MessageHandler", "HTTP"]  = HTTPPacketQ -> http
 
 http = HTTPHandler[]
 http["MessageHandler", "File"]  = GetFileRequestQ[{"html", "css", "js", "png", "jpg", "svg"}] -> (
-  ImportFileAsText[#, "Base"->$PublicDirectory] &
+  ImportFileAsText[#, "Base":>$PathDir] &
 )
-http["MessageHandler", "WSP"] = GetFileRequestQ[{"wsp"}] -> (HypertextProcess[#, "Base"->$PublicDirectory]&)
-http["MessageHandler", "Index"]  = AssocMatchQ[<|"Path" -> "/"|>] ->  (HypertextProcess[#, "index.wsp", "Base"->$PublicDirectory]&)
+http["MessageHandler", "WSP"] = GetFileRequestQ[{"wsp"}] -> (HypertextProcess[#, "Base":>$PathDir]&)
+http["MessageHandler", "Index"]  = AssocMatchQ[<|"Path" -> "/"|>] ->  (HypertextProcess[#, "index.wsp", "Base":>$PathDir]&)
 
-http["MessageHandler", "Post"] = GetPOSTRequestQ[{"wsp"}] -> Composition[(HypertextProcess[#, "Base"->$PublicDirectory]&), ProcessMultipart]
+http["MessageHandler", "Post"] = GetPOSTRequestQ[{"wsp"}] -> Composition[(HypertextProcess[#, "Base":>$PathDir]&), ProcessMultipart]
 
 
 httplistener = SocketListen[8000, tcp@#&]
