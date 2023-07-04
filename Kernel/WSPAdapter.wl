@@ -27,9 +27,9 @@ With[{file = URLPathToFileName[request]},
 
 (* не придумал, как передать опции ;()
 
-HypertextProcess[request_Association, OptionsPattern[]] :=
+HypertextProcess[request_Association, opts: OptionsPattern[]] :=
     With[{file = URLPathToFileName[request]},
-        HypertextProcess[request, file, ...]
+        HypertextProcess[request, file, ..., opts]
     ]
 
  *)

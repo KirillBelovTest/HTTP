@@ -31,7 +31,7 @@
 
 (* ::Section::Closed:: *)
 (*Requarements*)
-Print["Loading... "<>$InputFileName];
+
 
 Once[If[PacletFind["KirillBelov/Internal"] === {}, PacletInstall["KirillBelov/Internal"]]]; 
 Once[If[PacletFind["KirillBelov/Objects"] === {}, PacletInstall["KirillBelov/Objects"]]]; 
@@ -225,9 +225,8 @@ Module[{response = assoc, body, headers},
 	|>];  
 
 	(*Return: _String*)
-
 	StringTemplate["HTTP/1.1 `Code` `Message`\r\n"][response] <> 
-	StringRiffle[KeyValueMap[StringRiffle[{#1, #2}, ": "]&] @ response["Headers"], "\r\n"] <> 
+	StringRiffle[KeyValueMap[StringRiffle[{#1, ToString[#2]}, ": "]&] @ response["Headers"], "\r\n"] <> 
 	"\r\n\r\n" <> 
 	body
 ]; 
