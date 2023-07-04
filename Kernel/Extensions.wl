@@ -12,7 +12,7 @@ GetFileRequestQ::usage =
 
 
 URLPathToFileName::usage = 
-"URLPathToFileName[request] to file path"; 
+"URLPathToFileName[request] to file path."; 
 
 
 FileNameToURLPath::usage = 
@@ -22,16 +22,20 @@ FileNameToURLPath::usage =
 ImportFileAsText::usage = 
 "ImportFileAsText[request] import file from request as text data."; 
 
+
 GetMIMEType::usage = 
-"GetMIMEType[request] returns mime type based on a file extension"
+"GetMIMEType[request] returns mime type based on a file extension."; 
+
 
 GetPOSTRequestQ::usage = 
-"GetPOSTRequestQ[fileType] returns function for checking that is a Post request and path contatins file."
+"GetPOSTRequestQ[fileType] returns function for checking that is a Post request and path contatins file."; 
+
 
 ProcessMultipart::usage = 
-"ProcessMultipart[request] returns processed request with a POST data decrypted"
+"ProcessMultipart[request] returns processed request with a POST data decrypted."; 
 
-Begin["`Private`"];
+
+Begin["`Private`"]; 
 
 
 GetFileRequestQ[fileType: _String | {__String} | _StringExpression] := 
@@ -52,21 +56,33 @@ FileNameToURLPath[fileName_String] :=
 URLBuild[FileNameSplit[StringTrim[fileName, StartOfString ~~ Directory[]]]]; 
 
 
-ImportFileAsText[file_String] := With[{},
-    If[FileExistsQ[file],
-        With[{body = Import[file, "String"]},
-            <|"Body"->body, "Code"->200, "Headers"-><|"Content-Type" -> GetMIMEType[file], "Content-Length" -> StringLength[body], "Connection"-> "Keep-Alive", "Keep-Alive" -> "timeout=5, max=1000", "Cache-Control" -> "max-age=60480"|>|> 
-        ]
-    ,
-        <|"Code"->404|>
-    ] 
-]
+Options[ImportFileAsText] = {"Base" :> Directory[]}
+
+
+ImportFileAsText[file_String] := 
+If[FileExistsQ[file], 
+    With[{body = Import[file, "String"]},
+        <|
+            "Body" -> body, 
+            "Code" -> 200, 
+            "Headers" -> <|
+                "Content-Type" -> GetMIMEType[file], 
+                "Content-Length" -> StringLength[body], 
+                "Connection"-> "Keep-Alive", 
+                "Keep-Alive" -> "timeout=5, max=1000", 
+                "Cache-Control" -> "max-age=60480"
+            |>
+        |> 
+    ], 
+
+(*Else*)
+    <|"Code" -> 404|>
+]; 
 
 
 ImportFileAsText[request_Association, OptionsPattern[]] := 
 ImportFileAsText[FileNameJoin[{OptionValue["Base"], URLPathToFileName[request["Path"]]}]]; 
 
-Options[ImportFileAsText] = {"Base"->""}
 
 MIMETypes = Uncompress["1:eJytWFlv3DYQTlsH6N0kva+HPhdaxw1co30r0AMF+hT+gIJLURJtUWRIrsT6J/\
 RXd0iudzfirKS1+2Lt0B+HM8M5+d1avaz+\
@@ -103,17 +119,21 @@ LOh8gOGMNonhIk6e/\
 IJwmu6hLHRNtIyHyO1hKHPIkBdTYp4wUAAzT359oKQT8wSwmHsL9Hb2udDbWS63QpNvsqi\
 A1YIpGbpRy7G8OozfRv4DUoPZxg=="]//Association
 
+
 GetMIMEType[file_String] := Module[{type},
     type = MIMETypes[file // FileExtension];
 	If[!StringQ[type], type = "application/octet-stream"];
     type
 ]
 
+
 GetMIMEType[request_Association] := GetMIMEType[URLPathToFileName[request["Path"]]]
+
 
 $DeserializeUrlencoded[request_Association, body_ByteArray] := (
     <|<|URLParse["/?" <> (body//ByteArrayToString)]|>["Query"]|>
 )
+
 
 DecryptField[line_String] := 
  Module[{stream = StringToStream[line], header, body}, 
@@ -153,7 +173,7 @@ DecryptField[line_String] :=
    Close[stream];
    
    <|"Body" -> body, "Headers" -> header|>
-]]
+]]; 
 
 
 $DeserializeMultipart[request_Association, body_ByteArray] := Module[{boundary, stream, buffer, field, data},
@@ -194,7 +214,8 @@ $DeserializeMultipart[request_Association, body_ByteArray] := Module[{boundary, 
     ] /@ buffer;
 
     data
-]
+]; 
+
 
 ProcessMultipart[request_Association, OptionsPattern[]] := Module[{},
     (* Return request_Association *)
@@ -209,7 +230,8 @@ ProcessMultipart[request_Association, OptionsPattern[]] := Module[{},
         Return[Join[request, <|"Data"->$DeserializeMultipart[request, request["Body"]], "Body"->{}|>]]
     ];
 
-]
+]; 
+
 
 End[]; 
 
