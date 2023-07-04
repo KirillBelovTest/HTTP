@@ -1,0 +1,53 @@
+<?wsp 
+    If[KeyExistsQ[session, "Data"],
+        (* if POST *)
+
+        Print[session["Data"]];
+        session["image"] = cellularAutomata[
+            session["Data", "rule"]//ToExpression, 
+            session["Data", "steps"]//ToExpression
+        ];
+        session["Redirect"] = "/blank.wsp";
+    ,
+        session["Data"] = <|"rule"->"69", "steps"->"20"|>;
+        session["image"] = cellularAutomata[69, 20];
+    ];
+    ""
+?>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Cellular Automata</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+  </head>
+  <body>
+  <div class="container">
+        <h1>Cellular Automata</h1>
+        <form action="index.wsp" method="POST">
+            <?wsp With[{rule = ToExpression@(session["Data", "rule"]), steps = ToExpression@(session["Data", "steps"])}, ?>
+            <div class="mb-3">
+                <label for="rule" class="form-label">Rule</label>
+                <div class="input-group flex-nowrap">
+                    <span class="input-group-text" id="addon-wrapping">@</span>
+                    <input type="text" id="rule" name="rule" class="form-control" value="<?wsp rule ?>"  aria-describedby="addon-wrapping">
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="steps" class="form-label">Steps</label>
+                <input type="range" class="form-range" id="steps" name="steps" min="1" max="250" step="1" value="<?wsp steps ?>">
+            </div>
+            
+            <button type="submit" class="btn btn-primary">Submit</button>
+            <?wsp ] ?>
+        </form>   
+        <br/>
+        <div class="card" style="width: auto;">
+            <?wsp session["image"] ?>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+  </body>
+</html>
