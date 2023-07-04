@@ -1,0 +1,15 @@
+<?wsp LoadPage["components/header.wsp"] ?>
+  <body>
+    <div class="container">
+        <h2>File browser</h2>
+        <br/>
+        <div class="list-group">
+            <?wsp LoadPage["components/parent.wsp", {name = session["Query", "path"]}] ?>
+            <?wsp Table[ ?>
+                <?wsp LoadPage["components/file.wsp", {name = i}] ?>
+            <?wsp , {i, FileNames["*", URLPathToFileName@(session["Query", "path"]) ]}] ?>
+        </div>
+    </div>
+    
+  </body>
+<?wsp LoadPage["components/footer.wsp"] ?>

@@ -1,0 +1,13 @@
+<?wsp LoadPage["components/header.wsp"] ?>
+  <body>
+    <div class="container">
+        <h2><?wsp session["Query", "path"] ?></h2>
+        <br/>
+        <div class="list-group">
+            <?wsp 
+                ListLinePlotly[Drop[Import[URLPathToFileName[session["Query", "path"]]], 1]] // Plant
+            ?>
+        </div>
+    </div>
+  </body>
+<?wsp LoadPage["components/footer.wsp"] ?>
