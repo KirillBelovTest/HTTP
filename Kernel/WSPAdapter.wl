@@ -10,7 +10,7 @@ With[{file = URLPathToFileName[request]},
 
     Block[{Global`session = <||>},
         Global`session = request;
-        body = LoadPage[file, {}, "Base"->FileNameJoin[{Directory[], OptionValue["Base"]}]];
+        body = LoadPage[file, {}, "Base"->First@Flatten@{OptionValue["Base"]}];
 
         (* handle special case for redirect *)
 
@@ -38,7 +38,7 @@ HypertextProcess[request_Association, filename_String, OptionsPattern[]] := Modu
 With[{file = filename},
     Block[{Global`session = <||>},
         Global`session = request;
-        body = LoadPage[file, {}, "Base"->FileNameJoin[{Directory[], OptionValue["Base"]}]];
+        body = LoadPage[file, {}, "Base"->First@Flatten@{OptionValue["Base"]}];
 
         (* handle special case for redirect *)
 
