@@ -2993,7 +2993,7 @@ Cell[BoxData[
             CheckboxBox["Session", {False, "Session"}], "\" \"", 
             
             TemplateBox[{
-             "\"Session\"", "\"Local or cloud interactive session\""}, 
+             "\"Session\"", "\"Local or cloud interactive $CurrentRequest\""}, 
              "PrettyTooltipTemplate"]},
            "RowDefault"],
           StripOnInput->False,
@@ -6029,7 +6029,7 @@ AsyncronousResourceInformationUpdates = False,
                     5593410685219912767]], 
                     CurrentValue[RSNB`nb$, {TaggingRules, "StatusMessage"}] = 
                     ""; DefinitionNotebookClient`$ButtonsDisabled = False; 
-                    Null]; Null]]], "\"In this session only\"" :> 
+                    Null]; Null]]], "\"In this $CurrentRequest only\"" :> 
               With[{RSNB`nb$ = InputNotebook[], RSNB`$cp$ = $ContextPath}, 
                 Quiet[
                  
@@ -6055,7 +6055,7 @@ AsyncronousResourceInformationUpdates = False,
                     HoldForm[
                     DefinitionNotebookClient`$ClickedButton = "Deploy"; 
                     DefinitionNotebookClient`$ClickedAction = 
-                    "In this session only"; 
+                    "In this $CurrentRequest only"; 
                     DefinitionNotebookClient`DisplayStripe[
                     ButtonNotebook[], 
                     DefinitionNotebookClient`DeployResource[

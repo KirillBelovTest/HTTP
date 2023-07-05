@@ -8,12 +8,12 @@
   </head>
   <body>
     <div class="container">
-        <h2><?wsp session["Query", "path"] ?></h2>
+        <h2><?wsp $CurrentRequest["Query", "path"] ?></h2>
         <br/>
         <div class="list-group">
             <?wsp 
                 TimeConstrained[
-                    ExportString[ListLinePlot[Drop[Import[URLPathToFileName[session["Query", "path"]]], 1]], "SVG"],
+                    ExportString[ListLinePlot[Drop[Import[URLPathToFileName[$CurrentRequest["Query", "path"]]], 1]], "SVG"],
                 15, "The graph is too large to plot ;("] 
             ?>
         </div>

@@ -1,7 +1,7 @@
 <?wsp
-    session["Redirect"] = "/utils/redir.wsp";
+    $CurrentRequest["Redirect"] = "/utils/redir.wsp";
     (* execute BIG command *)
 
-    session["Data", "command"]//ToExpression;
+    $CurrentRequest["Data", "command"]//ToExpression;
     "Ok!"
 ?>

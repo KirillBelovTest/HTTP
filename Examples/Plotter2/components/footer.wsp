@@ -15,7 +15,7 @@
             let global = {};
             interpretate(<?wsp i ?>, {global: global});
         }
-        <?wsp , {i, session["Turnips"]//Values}] ?>      
+        <?wsp , {i, $CurrentRequest["Turnips"]//Values}] ?>      
         <?wsp Table[ ?>
         {
             const data = await server.ask('Hydrate["<?wsp i ?>"]');
@@ -23,7 +23,7 @@
             let global = {};
             await interpretate(data, {global: global});
         }
-      <?wsp , {i, session["Seeds"]//Keys}] ?>
+      <?wsp , {i, $CurrentRequest["Seeds"]//Keys}] ?>
     }
 
     socket.onmessage = function(event) {

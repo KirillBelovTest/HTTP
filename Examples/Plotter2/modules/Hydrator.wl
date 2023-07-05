@@ -10,7 +10,7 @@ Plant[expr_] := With[{id = CreateUUID[]},
 ]
 
 Grow[expr_] := With[{id = CreateUUID[]},
-    session["Turnips"][id] = ExportString[Hold[expr], "ExpressionJSON", "Compact"->0];
+    $CurrentRequest["Turnips"][id] = ExportString[Hold[expr], "ExpressionJSON", "Compact"->0];
     ""
 ]
 
