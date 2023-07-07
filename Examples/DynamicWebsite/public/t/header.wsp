@@ -1,7 +1,7 @@
 <?wsp 
     (* initiate seeds *)
-    session["Seeds"] = <||>;
-    session["Turnips"] = <||>;
+    $CurrentRequest["Seeds"] = <||>;
+    $CurrentRequest["Turnips"] = <||>;
     ""
 ?>
 

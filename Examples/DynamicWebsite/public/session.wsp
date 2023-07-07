@@ -1,1 +1,1 @@
-<?wsp session ?>
+<?wsp $CurrentRequest ?>

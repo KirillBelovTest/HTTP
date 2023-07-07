@@ -1,16 +1,16 @@
 <?wsp 
-    If[KeyExistsQ[session, "Data"],
+    If[KeyExistsQ[$CurrentRequest, "Data"],
         (* if POST *)
 
-        Print[session["Data"]];
-        session["image"] = cellularAutomata[
-            session["Data", "rule"]//ToExpression, 
-            session["Data", "steps"]//ToExpression
+        Print[$CurrentRequest["Data"]];
+        $CurrentRequest["image"] = cellularAutomata[
+            $CurrentRequest["Data", "rule"]//ToExpression, 
+            $CurrentRequest["Data", "steps"]//ToExpression
         ];
-        session["Redirect"] = "/blank.wsp";
+        $CurrentRequest["Redirect"] = "/blank.wsp";
     ,
-        session["Data"] = <|"rule"->"69", "steps"->"20"|>;
-        session["image"] = cellularAutomata[69, 20];
+        $CurrentRequest["Data"] = <|"rule"->"69", "steps"->"20"|>;
+        $CurrentRequest["image"] = cellularAutomata[69, 20];
     ];
     ""
 ?>
@@ -26,7 +26,7 @@
   <div class="container">
         <h1>Cellular Automata</h1>
         <form action="index.wsp" method="POST">
-            <?wsp With[{rule = ToExpression@(session["Data", "rule"]), steps = ToExpression@(session["Data", "steps"])}, ?>
+            <?wsp With[{rule = ToExpression@($CurrentRequest["Data", "rule"]), steps = ToExpression@($CurrentRequest["Data", "steps"])}, ?>
             <div class="mb-3">
                 <label for="rule" class="form-label">Rule</label>
                 <div class="input-group flex-nowrap">
@@ -45,7 +45,7 @@
         </form>   
         <br/>
         <div class="card" style="width: auto;">
-            <?wsp session["image"] ?>
+            <?wsp $CurrentRequest["image"] ?>
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>

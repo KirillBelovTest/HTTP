@@ -4,10 +4,10 @@
         <h2>File browser</h2>
         <br/>
         <div class="list-group">
-            <?wsp LoadPage["components/parent.wsp", {name = session["Query", "path"]}] ?>
+            <?wsp LoadPage["components/parent.wsp", {name = $CurrentRequest["Query", "path"]}] ?>
             <?wsp Table[ ?>
                 <?wsp LoadPage["components/file.wsp", {name = i}] ?>
-            <?wsp , {i, FileNames["*", URLPathToFileName@(session["Query", "path"]) ]}] ?>
+            <?wsp , {i, FileNames["*", URLPathToFileName@($CurrentRequest["Query", "path"]) ]}] ?>
         </div>
     </div>
     
