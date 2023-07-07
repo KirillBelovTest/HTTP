@@ -1,9 +1,9 @@
 <?wsp 
-    If[session["Method"] === "POST",
+    If[$CurrentRequest["Method"] === "POST",
         Print["Post data recevied!"];
-        Print[session["Data"]];
+        Print[$CurrentRequest["Data"]];
 
-        session["Redirect"] = "/blank.wsp";
+        $CurrentRequest["Redirect"] = "/blank.wsp";
     ];
     "Ok!"
 ?>

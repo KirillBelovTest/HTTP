@@ -8,16 +8,16 @@ Begin["`Private`"];
 HypertextProcess[request_Association, OptionsPattern[]] := Module[{body},
 With[{file = URLPathToFileName[request]},
 
-    Block[{Global`session = <||>},
-        Global`session = request;
+    Block[{Global`$CurrentRequest = <||>},
+        Global`$CurrentRequest = request;
         body = LoadPage[file, {}, "Base"->First@Flatten@{OptionValue["Base"]}];
 
         (* handle special case for redirect *)
 
-        If[KeyExistsQ[Global`session, "Redirect"],
-            Print["Redirecting to "<>Global`session["Redirect"]];
+        If[KeyExistsQ[Global`$CurrentRequest, "Redirect"],
+            Print["Redirecting to "<>Global`$CurrentRequest["Redirect"]];
             <|  "Code"->201, "Body"->body, 
-                "Headers"-> <|"Content-Location" -> Global`session["Redirect"], "Content-Length" -> StringLength[body]|>
+                "Headers"-> <|"Content-Location" -> Global`$CurrentRequest["Redirect"], "Content-Length" -> StringLength[body]|>
             |> // Return
         ];
 
@@ -36,16 +36,16 @@ HypertextProcess[request_Association, opts: OptionsPattern[]] :=
 
 HypertextProcess[request_Association, filename_String, OptionsPattern[]] := Module[{body},
 With[{file = filename},
-    Block[{Global`session = <||>},
-        Global`session = request;
+    Block[{Global`$CurrentRequest = <||>},
+        Global`$CurrentRequest = request;
         body = LoadPage[file, {}, "Base"->First@Flatten@{OptionValue["Base"]}];
 
         (* handle special case for redirect *)
 
-        If[KeyExistsQ[Global`session, "Redirect"],
-            Print["Redirecting to "<>Global`session["Redirect"]];
+        If[KeyExistsQ[Global`$CurrentRequest, "Redirect"],
+            Print["Redirecting to "<>Global`$CurrentRequest["Redirect"]];
             <|  "Code"->201, "Body"->body, 
-                "Headers"-> <|"Content-Location" -> Global`session["Redirect"], "Content-Length" -> StringLength[body]|>
+                "Headers"-> <|"Content-Location" -> Global`$CurrentRequest["Redirect"], "Content-Length" -> StringLength[body]|>
             |> // Return
         ];
 

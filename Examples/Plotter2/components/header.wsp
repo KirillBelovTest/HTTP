@@ -1,10 +1,10 @@
 <?wsp 
     (* initiate seeds *)
-    session["Seeds"] = <||>;
-    session["Turnips"] = <||>;
+    $CurrentRequest["Seeds"] = <||>;
+    $CurrentRequest["Turnips"] = <||>;
 
-    If[!KeyExistsQ[session["Query"], "path"],
-        session["Query", "path"] = FileNameJoin[{$PublicDirectory, "example"}]//FileNameToURLPath;
+    If[!KeyExistsQ[$CurrentRequest["Query"], "path"],
+        $CurrentRequest["Query", "path"] = FileNameJoin[{$PublicDirectory, "example"}]//FileNameToURLPath;
     ];
 
     ""
