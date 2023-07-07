@@ -15,7 +15,8 @@ PacletObject[
         "Root" -> "Kernel",
         "Context" -> {
           {"KirillBelov`HTTPHandler`", "HTTPHandler.wl"}, 
-          {"KirillBelov`HTTPHandler`Extensions`", "Extensions.wl"}
+          {"KirillBelov`HTTPHandler`Extensions`", "Extensions.wl"}, 
+          {"KirillBelov`HTTPHandler`WSPAdapter`", "WSPAdapter.wl"}
         },
         "Symbols" -> {}
       },
