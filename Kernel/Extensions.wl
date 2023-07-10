@@ -4,7 +4,20 @@
 (*Extensions*)
 
 
-BeginPackage["KirillBelov`HTTPHandler`Extensions`", {"KirillBelov`Internal`"}]; 
+BeginPackage["KirillBelov`HTTPHandler`Extensions`", {
+    "KirillBelov`Internal`", 
+    "KirillBelov`HTTPHandler`", 
+    "KirillBelov`TCPServer`", 
+    "JerryI`WSP`"
+}]; 
+
+
+AddHTTPHandler::usage = 
+"AddHTTPHandler[tcp, http] adds HTTP Handler to TCP Server."; 
+
+
+HypertextProcess::usage = 
+"HypertextProcess[request] import file as WSP and process it."; 
 
 
 GetFileRequestQ::usage = 
@@ -38,6 +51,12 @@ ProcessMultipart::usage =
 Begin["`Private`"]; 
 
 
+AddHTTPHandler[tcp_TCPServer, key_String: "HTTP", http_HTTPHandler] := (
+    tcp["CompleteHandler", key] = HTTPPacketQ -> HTTPPacketLength; 
+    tcp["MessageHandler", key] = HTTPPacketQ -> http; 
+);
+
+
 GetFileRequestQ[fileType: _String | {__String} | _StringExpression] := 
 AssocMatchQ[<|"Method" -> "GET", "Path" -> "/" ~~ ___ ~~ "." ~~ fileType|>]; 
 
@@ -56,7 +75,7 @@ FileNameToURLPath[fileName_String] :=
 URLBuild[FileNameSplit[StringTrim[fileName, StartOfString ~~ Directory[]]]]; 
 
 
-Options[ImportFileAsText] = {"Base" :> Directory[]}
+Options[ImportFileAsText] = {"Base" :> {Directory[]}}
 
 
 ImportFileAsText[file_String] := 
@@ -260,6 +279,50 @@ ProcessMultipart[request_Association, OptionsPattern[]] := Module[{},
     ];
 
 ]; 
+
+
+Options[HypertextProcess] = {"Base" :> {Directory[]}}
+
+
+HypertextProcess[request_Association, OptionsPattern[]] := Module[{body},
+With[{file = URLPathToFileName[request]},
+
+    Block[{Global`$CurrentRequest = <||>},
+        Global`$CurrentRequest = request;
+        body = LoadPage[file, {}, "Base"->First@Flatten@{OptionValue["Base"]}];
+
+        (* handle special case for redirect *)
+
+        If[KeyExistsQ[Global`$CurrentRequest, "Redirect"],
+            Print["Redirecting to "<>Global`$CurrentRequest["Redirect"]];
+            <|  "Code"->201, "Body"->body, 
+                "Headers"-> <|"Content-Location" -> Global`$CurrentRequest["Redirect"], "Content-Length" -> StringLength[body]|>
+            |> // Return
+        ];
+
+        body
+    ]
+]]
+
+
+HypertextProcess[request_Association, filename_String, OptionsPattern[]] := Module[{body},
+With[{file = filename},
+    Block[{Global`$CurrentRequest = <||>},
+        Global`$CurrentRequest = request;
+        body = LoadPage[file, {}, "Base"->First@Flatten@{OptionValue["Base"]}];
+
+        (* handle special case for redirect *)
+
+        If[KeyExistsQ[Global`$CurrentRequest, "Redirect"],
+            Print["Redirecting to "<>Global`$CurrentRequest["Redirect"]];
+            <|  "Code"->201, "Body"->body, 
+                "Headers"-> <|"Content-Location" -> Global`$CurrentRequest["Redirect"], "Content-Length" -> StringLength[body]|>
+            |> // Return
+        ];
+
+        body
+    ]
+]]
 
 
 End[]; 
