@@ -220,16 +220,25 @@ createResponse[assoc_Association, serializer_] :=
 Module[{response = assoc, body, headers}, 
 	body = ConditionApply[serializer, ToString][response["Body"]]; 
 
+
 	If[Not[KeyExistsQ[response, "Message"]], response["Message"] = "OK"]; 
 	If[Not[KeyExistsQ[response, "Headers"]], response["Headers"] = <|
-		"Content-Length" -> StringLength[body]
+		"Content-Length" -> If[StringQ[body], StringLength[body], Length[body]]
 	|>];  
 
 	(*Return: ByteArray[]*)
-	StringToByteArray[StringTemplate["HTTP/1.1 `Code` `Message`\r\n"][response] <> 
-	StringRiffle[KeyValueMap[StringRiffle[{#1, ToString[#2]}, ": "]&] @ response["Headers"], "\r\n"] <> 
-	"\r\n\r\n" <> 
-	body]
+	If[StringQ[body],
+		StringToByteArray[StringTemplate["HTTP/1.1 `Code` `Message`\r\n"][response] <> 
+		StringRiffle[KeyValueMap[StringRiffle[{#1, ToString[#2]}, ": "]&] @ response["Headers"], "\r\n"] <> 
+		"\r\n\r\n" <> 
+		body]	
+	,
+		Join[StringToByteArray[StringTemplate["HTTP/1.1 `Code` `Message`\r\n"][response] <> 
+		StringRiffle[KeyValueMap[StringRiffle[{#1, ToString[#2]}, ": "]&] @ response["Headers"], "\r\n"] <> 
+		"\r\n\r\n"],
+		body]		
+	]
+
 ]; 
 
 
@@ -263,6 +272,9 @@ ExportString[image, "SVG"];
 
 $serializer[text_String] := 
 ExportString[text, "Text"]; 
+
+$serializer[bytes_ByteArray] := 
+bytes
 
 
 (* ::Section::Closed:: *)
