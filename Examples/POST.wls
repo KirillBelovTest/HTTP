@@ -6,13 +6,12 @@
 <<KirillBelov`WebSocketHandler`
 
 SetDirectory[FileNameJoin[{DirectoryName[$InputFileName], "POST"}]]
-$PublicDirectory = ""
+$PublicDirectory = Directory[]
 
 Get["https://raw.githubusercontent.com/JerryI/wl-wsp/main/Kernel/WSP.wl"]
 
 Get[FileNameJoin[{ParentDirectory[ParentDirectory[]], "Kernel", "HTTPHandler.wl"}]]
 Get[FileNameJoin[{ParentDirectory[ParentDirectory[]], "Kernel", "Extensions.wl"}]]
-Get[FileNameJoin[{ParentDirectory[ParentDirectory[]], "Kernel", "WSPAdapter.wl"}]]
 
 Print["Staring HTTP server..."];
 

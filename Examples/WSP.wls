@@ -1,18 +1,18 @@
 #!/usr/bin/env wolframscript
 (* ::Package:: *)
 
-<<KirillBelov`Internal`
-<<KirillBelov`TCPServer`
-<<KirillBelov`WebSocketHandler`
+Once[If[PacletFind["KirillBelov/Internal"] === {}, PacletInstall["KirillBelov/Internal"]]]; 
+<<KirillBelov`Internal`;
+Once[If[PacletFind["KirillBelov/TCPServer"] === {}, PacletInstall["KirillBelov/TCPServer"]]]; 
+<<KirillBelov`TCPServer`;
+Once[If[PacletFind["JerryI/WSP"] === {}, PacletInstall["JerryI/WSP"]]]; 
+<<JerryI`WSP`;
 
 SetDirectory[FileNameJoin[{DirectoryName[$InputFileName], "WSP"}]]
-$PublicDirectory = ""
-
-Get["https://raw.githubusercontent.com/JerryI/wl-wsp/main/Kernel/WSP.wl"]
+$PublicDirectory = Directory[]
 
 Get[FileNameJoin[{ParentDirectory[ParentDirectory[]], "Kernel", "HTTPHandler.wl"}]]
 Get[FileNameJoin[{ParentDirectory[ParentDirectory[]], "Kernel", "Extensions.wl"}]]
-Get[FileNameJoin[{ParentDirectory[ParentDirectory[]], "Kernel", "WSPAdapter.wl"}]]
 
 Print["Staring HTTP server..."];
 
@@ -31,7 +31,7 @@ httplistener = SocketListen[8000, tcp@#&]
 
 SetOptions[WSPEngine, "Cache"->False];
 
-StringTemplate["Open your browser on ``"][URLBuild[<|"Scheme" -> "http", 
+StringTemplate["Open your browser on ``?color=cyan"][URLBuild[<|"Scheme" -> "http", 
   "Port" -> httplistener["Socket"]["DestinationPort"], 
   "Domain" -> First[httplistener["Socket"]["DestinationIPAddress"]]|>]] // Print;
 

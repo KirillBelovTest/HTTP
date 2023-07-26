@@ -3,7 +3,7 @@
 
 SetDirectory[DirectoryName[$InputFileName]]
 
-$PublicDirectory = "Plotter"
+$PublicDirectory = FileNameJoin[{Directory[],"Plotter"}]
 
 Once[If[PacletFind["KirillBelov/Internal"] === {}, PacletInstall["KirillBelov/Internal"]]]; 
 <<KirillBelov`Internal`;
@@ -14,7 +14,6 @@ Once[If[PacletFind["JerryI/WSP"] === {}, PacletInstall["JerryI/WSP"]]];
 
 Get[FileNameJoin[{ParentDirectory[], "Kernel", "HTTPHandler.wl"}]];
 Get[FileNameJoin[{ParentDirectory[], "Kernel", "Extensions.wl"}]];
-Get[FileNameJoin[{ParentDirectory[], "Kernel", "WSPAdapter.wl"}]];
 
 Print["Staring HTTP server..."];
 

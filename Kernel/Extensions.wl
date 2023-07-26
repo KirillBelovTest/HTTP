@@ -75,23 +75,27 @@ FileNameToURLPath[fileName_String] :=
 URLBuild[FileNameSplit[StringTrim[fileName, StartOfString ~~ Directory[]]]]; 
 
 
-Options[ImportFileAsText] = {"Base" :> {Directory[]}}
+Options[ImportFileAsText] = {"Base" :> {Directory[]}, "StringOutput"->False}
 
 
-ImportFileAsText[file_String] := 
+ImportFileAsText[file_String, OptionsPattern[]] := 
 If[FileExistsQ[file], 
     With[{body = Import[file, "String"]},
-        <|
-            "Body" -> body, 
-            "Code" -> 200, 
-            "Headers" -> <|
-                "Content-Type" -> GetMIMEType[file], 
-                "Content-Length" -> StringLength[body], 
-                "Connection"-> "Keep-Alive", 
-                "Keep-Alive" -> "timeout=5, max=1000", 
-                "Cache-Control" -> "max-age=60480"
+        If[!OptionValue["StringOutput"],
+            <|
+                "Body" -> body, 
+                "Code" -> 200, 
+                "Headers" -> <|
+                    "Content-Type" -> GetMIMEType[file], 
+                    "Content-Length" -> StringLength[body], 
+                    "Connection"-> "Keep-Alive", 
+                    "Keep-Alive" -> "timeout=5, max=1000", 
+                    "Cache-Control" -> "max-age=60480"
+                |>
             |>
-        |> 
+        ,
+            body
+        ] 
     ], 
 
 (*Else*)
@@ -127,9 +131,6 @@ ImportFileAsText[base_List, name_String] := With[{file = Which@@Flatten[Map[
 
 ImportFileAsText[request_Association, OptionsPattern[]] := (
 ImportFileAsText[OptionValue["Base"], URLPathToFileName[request["Path"]]])
-
-ImportFileAsText[name_String] := 
-ImportFileAsText[URLPathToFileName[name], ""]
 
 
 MIMETypes = Uncompress["1:eJytWFlv3DYQTlsH6N0kva+HPhdaxw1co30r0AMF+hT+gIJLURJtUWRIrsT6J/\
