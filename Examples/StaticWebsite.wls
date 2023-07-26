@@ -16,8 +16,13 @@ tcp["MessageHandler", "HTTP"]  = HTTPPacketQ -> http
 Print["Starting HTTP handler"];
 
 http = HTTPHandler[]
-http["MessageHandler", "Index"]  = AssocMatchQ[<|"Path" -> "/"|>] -> Function[StringToByteArray["hello"]]
+http["MessageHandler", "Index"]  = AssocMatchQ[<|"Path" -> "/"|>] -> Function[ImportFileAsText["index.html"]]
+http["MessageHandler", "File"]  = GetFileRequestQ[{"html", "css", "js", "png", "jpg", "svg"}] -> (ImportFileAsText[#, "Base"->{"", "secret"}]&)
 
 listener = SocketListen[9000, tcp@Echo@#&]
 
-While[True, Pause[0.01]]
+StringTemplate["Open your browser on ``"][URLBuild[<|"Scheme" -> "http", 
+  "Port" -> httplistener["Socket"]["DestinationPort"], 
+  "Domain" -> First[httplistener["Socket"]["DestinationIPAddress"]]|>]] // Print;
+
+While[True, Pause[0.001]]

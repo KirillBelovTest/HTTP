@@ -75,31 +75,24 @@ FileNameToURLPath[fileName_String] :=
 URLBuild[FileNameSplit[StringTrim[fileName, StartOfString ~~ Directory[]]]]; 
 
 
-Options[ImportFile] = {
-    "Base" :> {Directory[]}
-}; 
+Options[ImportFileAsText] = {"Base" :> {Directory[]}}
 
 
-ImportFile[file_String, OptionsPattern[]] := 
-Module[{base, body}, 
-    base = OptionValue["Base"]; 
-    Block[{$Path = DeleteDuplicates[Join[$Path, base]]}, 
-        If[FileExistsQ[file], 
-            body = Import[file, "String"]; 
-            
-            
-            (*Return: Association[]*)
-            <|
-                "Body" -> body, 
-                "Code" -> 200, 
-                "Headers" -> <|
-                    "Content-Type" -> GetMIMEType[file], 
-                    "Content-Length" -> StringLength[body], 
-                    "Connection"-> "Keep-Alive", 
-                    "Keep-Alive" -> "timeout=5, max=1000", 
-                    "Cache-Control" -> "max-age=60480"
-                |>
-            |>, 
+ImportFileAsText[file_String] := 
+If[FileExistsQ[file], 
+    With[{body = Import[file, "String"]},
+        <|
+            "Body" -> body, 
+            "Code" -> 200, 
+            "Headers" -> <|
+                "Content-Type" -> GetMIMEType[file], 
+                "Content-Length" -> StringLength[body], 
+                "Connection"-> "Keep-Alive", 
+                "Keep-Alive" -> "timeout=5, max=1000", 
+                "Cache-Control" -> "max-age=60480"
+            |>
+        |> 
+    ], 
 
         (*Else*)
             <|"Code" -> 404|>
@@ -112,10 +105,52 @@ ImportFile[request_Association, opts: OptionsPattern[]] :=
 ImportFile[URLPathToFileName[request["Path"]], opts]
 
 
-GetMIMEType[file_String] := 
-Module[{type},
-    type = $mimeTypes[FileExtension[file]]; 
-	If[!StringQ[type], type = "application/octet-stream"]; 
+ImportFileAsText[request_Association, OptionsPattern[]] := (
+ImportFileAsText[OptionValue["Base"], URLPathToFileName[request["Path"]]])
+
+ImportFileAsText[name_String] := 
+ImportFileAsText[URLPathToFileName[name], ""]
+
+
+MIMETypes = Uncompress["1:eJytWFlv3DYQTlsH6N0kva+HPhdaxw1co30r0AMF+hT+gIJLURJtUWRIrsT6J/\
+RXd0iudzfirKS1+2Lt0B+HM8M5+d1avaz+\
+ffTokT2DP38J66o376iXm5aTQFFBPgsfrVvBqBOqO9fKOsuM0GP8WxFfkffDd1MKde4LoK\
+sR7CzB2ELcLL94rGXkXfg67t25bqnoUFBFPoRvL0oeeElbwBIK1OTtO25AoBA/\
+zysacEPe28m/\
+plYwjFsvyDs7bkAhmLXUESMkrfk5UBjGJkwUvHGyxTAuWSHx0cau1k5gtg/\
+L88g34MeM7QPFFtwPq+WBhkBhGK0XMLJ2f39AIJCSmcyxfVEKw5lTBtvADfkq2+Avn/\
+9UMFowbrBoKBUjz0abpB2UKRF7A1iS5yN035Ur8K2wZQWAjeSdW0nKjOIdXbe8XF38gPPy\
+5A+El9K88+AXykjqbKGqSjC+YxyO0UYxbq3oatnujkR1c6fo5qZ1c1zCbTq+SDf3v+\
+h2dySmmyv3DuTRMCohZJ/mDoSGLtf2tCxaaU8+2EVC0A1WEFwNEbqPmDoLzkDVt9k1+aK+\
+FeP8EQK5mQ/kZgYTxGpaTT4enTmIruEtlrSaJSENyWwys50lTDub/\
+gRTByYDCsXYaP6UP2jLu5JiOUHwQ/\
+MDhQglam6jelKVvD0PJMapXgLqxLyhrqkhX4xsf017WlDDGtFj3n6teeSb1ACqRvQIy9Oo\
+xGoGFKhrm0noiyDj0Xi4nqlrj+FHCGWfuZ0v4jqikOS2ObB5IJGTpSjjyal+\
+A4VxEqWYBCVGFflonC6zgI1I1UdkagZebQS7cUJiFyf1i6jB9lz8SuT2dhM7BHSWQPU0Kr\
+Gq4s3Fa9hmb8lLQTVlN3Dh6JZFfHVWW7fsIWNfQ0lGN/\
+l7bFpy56qk2VXBGoLUVzJP7DfMXhUSvzF9ZcnX6AYr6o66jUF3lbnvwBoSWrpFkr3mBsuE\
+uqsPshdQiF/oULd/PGJlNXCjlYDaekL11qF6/4ZwnK7e2nAL3wifrt1aU/\
+LtnMSYYJpK8mJWVVqWopvRM4lh7ymGleRqVgzbQkDZRg1LTK5hWPn9oSbfnYgq6+\
+6pLLjXz7PKHkqySF9wsT8fqu8hiap8e7LKMUJPaAUD9cotKAaBMpR8sqsFEPRdYThtI4mI\
+b8DZT4HX6zjGplzhC6AxEU7j6fKsBmso0u/7MSNYE34gOEs1+\
+TJLf7AKbmsc26B7YOj6PN/DDOcdo+\
+MRNPywolXzRcQKifoHSPP3zbASboPPmVY48mkuj9uAs2L+YdtoxF1JHqiGUMUYd+\
+WClwgLFSQfc6tNqEzwP4rr2tcH4wpQ3+\
+Mzkx3oaUO3HarMiGCMRrGbgfa8qI4I5KAJzoczhzbxoWtEsFnPGLGN23fg7sgYEtanUY+\
+3qHYaFk+EtnHfUDv8lSwsT6MiK1tlffc2Y3HPOHq6d/MTR8/\
+SE10aloue0ewJIMEsefIa7Ohc1Zfq4DkMKAwj+\
+oMHuKAHrIyB4UdvtnZO4RpIjJ0ts7BLTC2avMD9DqLJF0AjZw/h0e7pODwH/\
+PFukPn9hIdFyR2tRIv1OgOo9iRjj3olrKbKM8YeHboGfZmlgviIwk0FAXu5usA2mQXG9pC\
+nkbAWbQ+dqqgbV8B/sH1rGZPdXRXya+\
+EkRZGvPV0GbT0eOr6FQriaiIrFDZ9v87F2IrzS4XZNLqcOtw3nbrUWHTX/\
+LOh8gOGMNonhIk6e/\
+IJwmu6hLHRNtIyHyO1hKHPIkBdTYp4wUAAzT359oKQT8wSwmHsL9Hb2udDbWS63QpNvsqi\
+A1YIpGbpRy7G8OozfRv4DUoPZxg=="]//Association
+
+
+GetMIMEType[file_String] := Module[{type},
+    type = MIMETypes[file // FileExtension];
+	If[!StringQ[type], type = "application/octet-stream"];
     type
 ]; 
 

@@ -3,7 +3,7 @@
 
 SetDirectory[DirectoryName[$InputFileName]]
 
-$PublicDirectory = "FormExample"
+$PublicDirectory = FileNameJoin[{Directory[], "FormExample"}]
 
 Once[If[PacletFind["KirillBelov/Internal"] === {}, PacletInstall["KirillBelov/Internal"]]]; 
 <<KirillBelov`Internal`;
@@ -14,7 +14,6 @@ Once[If[PacletFind["JerryI/WSP"] === {}, PacletInstall["JerryI/WSP"]]];
 
 Get[FileNameJoin[{ParentDirectory[], "Kernel", "HTTPHandler.wl"}]];
 Get[FileNameJoin[{ParentDirectory[], "Kernel", "Extensions.wl"}]];
-Get[FileNameJoin[{ParentDirectory[], "Kernel", "WSPAdapter.wl"}]];
 
 Print["Staring HTTP server..."];
 
@@ -39,7 +38,7 @@ httplistener = SocketListen[8000, tcp@#&]
 
 SetOptions[WSPEngine, "Cache"->True];
 
-StringTemplate["Open your browser on ``cellular.wsp"][URLBuild[<|"Scheme" -> "http", 
+StringTemplate["Open your browser on ``index.wsp"][URLBuild[<|"Scheme" -> "http", 
   "Port" -> httplistener["Socket"]["DestinationPort"], 
   "Domain" -> First[httplistener["Socket"]["DestinationIPAddress"]]|>]] // Print;
 

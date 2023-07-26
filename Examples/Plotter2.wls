@@ -3,7 +3,7 @@
 
 SetDirectory[DirectoryName[$InputFileName]]
 
-$PublicDirectory = "Plotter2"
+$PublicDirectory = FileNameJoin[{Directory[], "Plotter2"}]
 
 Once[If[PacletFind["KirillBelov/Internal"] === {}, PacletInstall["KirillBelov/Internal"]]]; 
 <<KirillBelov`Internal`;
@@ -12,15 +12,15 @@ Once[If[PacletFind["KirillBelov/TCPServer"] === {}, PacletInstall["KirillBelov/T
 Once[If[PacletFind["JerryI/WSP"] === {}, PacletInstall["JerryI/WSP"]]]; 
 <<JerryI`WSP`;
 
+
 Get[FileNameJoin[{ParentDirectory[], "Kernel", "HTTPHandler.wl"}]];
 Get[FileNameJoin[{ParentDirectory[], "Kernel", "Extensions.wl"}]];
-Get[FileNameJoin[{ParentDirectory[], "Kernel", "WSPAdapter.wl"}]];
 
-Get["https://raw.githubusercontent.com/JerryI/wl-misc/main/Kernel/Channels.wl"]
+Once[If[PacletFind["KirillBelov/WebSocketHandler"] === {}, PacletInstall["KirillBelov/WebSocketHandler"]]]; 
+<<KirillBelov`WebSocketHandler`;
+
 Get["https://raw.githubusercontent.com/JerryI/wl-misc/main/Kernel/Events.wl"]
-
-Get["Plotter2/modules/Hydrator.wl"]
-Get["Plotter2/modules/Polyfill.wl"]
+Get["https://raw.githubusercontent.com/JerryI/wl-wsp/main/Kernel/Hydrator.wl"]
 
 Print["Staring HTTP server..."];
 
@@ -56,9 +56,6 @@ evaluate[cl_SocketObject, data_ByteArray] := Block[{Global`client = cl},
 SocketListen[8005, wcp@#&]
 
 SetOptions[WSPEngine, "Cache"->False];
-
-WebSocketChannel[Automatic]["Serializer"] = ExportByteArray[#, "ExpressionJSON"]&
-WebSocketChannel["jsio"]["Serializer"] = ExportByteArray[#, "ExpressionJSON"]&
 
 StringTemplate["Open your browser on ``"][URLBuild[<|"Scheme" -> "http", 
   "Port" -> httplistener["Socket"]["DestinationPort"], 
