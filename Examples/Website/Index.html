@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Wolfram Static Site</title>
+        <script src="https://cdn.plot.ly/plotly-2.24.1.min.js" charset="utf-8"></script>
+        <style>
+            h1.header {
+                text-align: center;
+            }
+            aside.menu-panel {
+                background: #ffffff;
+                padding-left: 10px;
+                width: 200px;
+                height: fit-content;
+                float: left;
+            }
+            div.content {
+                background: #ffffff;
+                padding-left: 220px;
+            }
+        </style>
+    </head>
+    <body>
+        <h1 class="header">Index</h1>
+        <aside class="menu-panel">
+            <p>Notebooks</p>
+                <ul id="notebooks">
+                    
+                </ul>
+            <p>Kernels</p>
+            <p>Settings</p>
+        </aside>
+        <div class="content">
+            <*DateString[]*><br/>
+            <a href="wl://test">run wolfram script</a>
+            <img src="WL.png" />
+            <div id="tester" style="width:600px;height:250px;"></div>
+        </aside>
+        <script>
+            getNotebooksNames(); 
+
+            function getNotebooksNames(){
+                const protocol = window.location.protocol; 
+                const host = window.location.host;
+                const url = protocol + "//" + host + "/api/getNotebooksNames" 
+                let xhr = new XMLHttpRequest();
+                xhr.onload = () => {
+                    let ul = document.getElementById("notebooks");
+                    let names = JSON.parse(xhr.responseText); 
+                    addNamesOnPage(ul, names);
+                }; 
+                xhr.open("GET", url); 
+                xhr.send(); 
+            }
+
+            function appendLi(ul, name) {
+                let li = document.createElement("li");
+                li.appendChild(document.createTextNode(name));
+                li.setAttribute("id", name); 
+                ul.appendChild(li);
+            }
+
+            function addNamesOnPage(ul, names){
+                for (let name of names){
+                    appendLi(ul, name) 
+                }
+            }
+
+            function getBigString(n){
+                let s = "#"; 
+                for (let i = 0; i < n; i++){
+                    s = s + s
+                }; 
+                return s; 
+            }
+
+            function sendPost(body){
+                const protocol = window.location.protocol; 
+                const host = window.location.host;
+                const url = protocol + "//" + host + "/api/getNotebooksNames" 
+                let xhr = new XMLHttpRequest();
+                xhr.open("POST", url); 
+                xhr.send(body); 
+            }
+
+            function plot(){
+                TESTER = document.getElementById('tester');
+                Plotly.newPlot( TESTER, [{
+                    x: [1, 2, 3, 4, 5],
+                    y: [1, 2, 4, 8, 16] }], {
+                margin: { t: 0 } } );
+            }
+        </script>
+    </body>
+</html>

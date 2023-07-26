@@ -40,20 +40,16 @@ Cell["", "FileManagerTopSpacer",
 Cell[TextData[Cell[BoxData[
  InterpretationBox[
   TagBox[
-   ActionMenuBox["\<\"Documentation\"\>", {"\<\"Open/Close Group\"\>":>(
-    SelectionMove[
-      ParentCell[
-       EvaluationCell[]], All, Cell]; FrontEndTokenExecute[
-      EvaluationNotebook[], "OpenCloseGroup"]), "\<\"Open Directory\"\>":>
-    DefinitionNotebookClient`FileTreeOpen[
-     ParentCell[
-      EvaluationCell[]]], "\<\"Un/Mark as Excluded\"\>":>
-    DefinitionNotebookClient`FileTreeExclusionToggle[
-     ParentCell[
-      EvaluationCell[]]], "\<\"Copy Path to Clipboard\"\>":>
-    DefinitionNotebookClient`FileTreeCopy[
-     ParentCell[
-      EvaluationCell[]]]},
+   ActionMenuBox["\<\"Documentation\"\>",{
+    "\"Open/Close Group\"" :> (
+      SelectionMove[ParentCell[EvaluationCell[]], All, Cell]; 
+      FrontEndTokenExecute[EvaluationNotebook[], "OpenCloseGroup"]), 
+     "\"Open Directory\"" :> 
+     DefinitionNotebookClient`FileTreeOpen[ParentCell[EvaluationCell[]]], 
+     "\"Un/Mark as Excluded\"" :> 
+     DefinitionNotebookClient`FileTreeExclusionToggle[
+      ParentCell[EvaluationCell[]]], "\"Copy Path to Clipboard\"" :> 
+     DefinitionNotebookClient`FileTreeCopy[ParentCell[EvaluationCell[]]]},
     Appearance->None,
     BaseStyle->{"Text"}],
    Annotation[#, 
@@ -80,20 +76,16 @@ Cell[CellGroupData[{
 Cell[TextData[Cell[BoxData[
  InterpretationBox[
   TagBox[
-   ActionMenuBox["\<\"Examples\"\>", {"\<\"Open/Close Group\"\>":>(
-    SelectionMove[
-      ParentCell[
-       EvaluationCell[]], All, Cell]; FrontEndTokenExecute[
-      EvaluationNotebook[], "OpenCloseGroup"]), "\<\"Open Directory\"\>":>
-    DefinitionNotebookClient`FileTreeOpen[
-     ParentCell[
-      EvaluationCell[]]], "\<\"Un/Mark as Excluded\"\>":>
-    DefinitionNotebookClient`FileTreeExclusionToggle[
-     ParentCell[
-      EvaluationCell[]]], "\<\"Copy Path to Clipboard\"\>":>
-    DefinitionNotebookClient`FileTreeCopy[
-     ParentCell[
-      EvaluationCell[]]]},
+   ActionMenuBox["\<\"Examples\"\>",{
+    "\"Open/Close Group\"" :> (
+      SelectionMove[ParentCell[EvaluationCell[]], All, Cell]; 
+      FrontEndTokenExecute[EvaluationNotebook[], "OpenCloseGroup"]), 
+     "\"Open Directory\"" :> 
+     DefinitionNotebookClient`FileTreeOpen[ParentCell[EvaluationCell[]]], 
+     "\"Un/Mark as Excluded\"" :> 
+     DefinitionNotebookClient`FileTreeExclusionToggle[
+      ParentCell[EvaluationCell[]]], "\"Copy Path to Clipboard\"" :> 
+     DefinitionNotebookClient`FileTreeCopy[ParentCell[EvaluationCell[]]]},
     Appearance->None,
     BaseStyle->{"Text"}],
    Annotation[#, 
@@ -120,20 +112,16 @@ Cell[CellGroupData[{
 Cell[TextData[Cell[BoxData[
  InterpretationBox[
   TagBox[
-   ActionMenuBox["\<\"StaticWebsite\"\>", {"\<\"Open/Close Group\"\>":>(
-    SelectionMove[
-      ParentCell[
-       EvaluationCell[]], All, Cell]; FrontEndTokenExecute[
-      EvaluationNotebook[], "OpenCloseGroup"]), "\<\"Open Directory\"\>":>
-    DefinitionNotebookClient`FileTreeOpen[
-     ParentCell[
-      EvaluationCell[]]], "\<\"Un/Mark as Excluded\"\>":>
-    DefinitionNotebookClient`FileTreeExclusionToggle[
-     ParentCell[
-      EvaluationCell[]]], "\<\"Copy Path to Clipboard\"\>":>
-    DefinitionNotebookClient`FileTreeCopy[
-     ParentCell[
-      EvaluationCell[]]]},
+   ActionMenuBox["\<\"StaticWebsite\"\>",{
+    "\"Open/Close Group\"" :> (
+      SelectionMove[ParentCell[EvaluationCell[]], All, Cell]; 
+      FrontEndTokenExecute[EvaluationNotebook[], "OpenCloseGroup"]), 
+     "\"Open Directory\"" :> 
+     DefinitionNotebookClient`FileTreeOpen[ParentCell[EvaluationCell[]]], 
+     "\"Un/Mark as Excluded\"" :> 
+     DefinitionNotebookClient`FileTreeExclusionToggle[
+      ParentCell[EvaluationCell[]]], "\"Copy Path to Clipboard\"" :> 
+     DefinitionNotebookClient`FileTreeCopy[ParentCell[EvaluationCell[]]]},
     Appearance->None,
     BaseStyle->{"Text"}],
    Annotation[#, 
@@ -330,19 +318,16 @@ Cell[CellGroupData[{
 Cell[TextData[Cell[BoxData[
  InterpretationBox[
   TagBox[
-   ActionMenuBox["\<\"Kernel\"\>", {"\<\"Open/Close Group\"\>":>(SelectionMove[
-      ParentCell[
-       EvaluationCell[]], All, Cell]; FrontEndTokenExecute[
-      EvaluationNotebook[], "OpenCloseGroup"]), "\<\"Open Directory\"\>":>
-    DefinitionNotebookClient`FileTreeOpen[
-     ParentCell[
-      EvaluationCell[]]], "\<\"Un/Mark as Excluded\"\>":>
-    DefinitionNotebookClient`FileTreeExclusionToggle[
-     ParentCell[
-      EvaluationCell[]]], "\<\"Copy Path to Clipboard\"\>":>
-    DefinitionNotebookClient`FileTreeCopy[
-     ParentCell[
-      EvaluationCell[]]]},
+   ActionMenuBox["\<\"Kernel\"\>",{
+    "\"Open/Close Group\"" :> (
+      SelectionMove[ParentCell[EvaluationCell[]], All, Cell]; 
+      FrontEndTokenExecute[EvaluationNotebook[], "OpenCloseGroup"]), 
+     "\"Open Directory\"" :> 
+     DefinitionNotebookClient`FileTreeOpen[ParentCell[EvaluationCell[]]], 
+     "\"Un/Mark as Excluded\"" :> 
+     DefinitionNotebookClient`FileTreeExclusionToggle[
+      ParentCell[EvaluationCell[]]], "\"Copy Path to Clipboard\"" :> 
+     DefinitionNotebookClient`FileTreeCopy[ParentCell[EvaluationCell[]]]},
     Appearance->None,
     BaseStyle->{"Text"}],
    Annotation[#, 
@@ -869,7 +854,7 @@ Cell[BoxData[
   ";"}]], "Input", "Excluded",
  TaggingRules->{},
  InitializationCell->True,
- CellLabel->"In[2]:=",
+ CellLabel->"In[11]:=",
  CellID->172764492,ExpressionUUID->"6fa13601-16c9-4d3b-a2af-8dbf8f4bb686"]
 }, Open  ]],
 
@@ -891,7 +876,7 @@ Cell[BoxData[
   RowBox[{"HTTPHandler", "[", "]"}]}]], "Input",
  TaggingRules->{},
  CellTags->"DefaultContent",
- CellLabel->"In[3]:=",
+ CellLabel->"In[12]:=",
  CellID->593829399,ExpressionUUID->"9dc4c019-cf6b-4502-b756-40be8c758ee3"],
 
 Cell[BoxData[
@@ -1271,8 +1256,8 @@ VNRInI88Rh4jj5HHyGPkMfL4pXr8f3YiCIQ=
                  TagBox["\"Self: \"", "SummaryItemAnnotation"], 
                  "\[InvisibleSpace]", 
                  TagBox[
-                 "KirillBelov`HTTPHandler`HTTPHandler`$4722", 
-                  "SummaryItem"]}], "\[SpanFromLeft]"}, {
+                 "KirillBelov`HTTPHandler`HTTPHandler`$12", "SummaryItem"]}], 
+               "\[SpanFromLeft]"}, {
                RowBox[{
                  TagBox["\"Properties: \"", "SummaryItemAnnotation"], 
                  "\[InvisibleSpace]", 
@@ -1280,11 +1265,11 @@ VNRInI88Rh4jj5HHyGPkMfL4pXr8f3YiCIQ=
                   RowBox[{"{", 
                     
                     RowBox[{
-                    "\"Icon\"", ",", "\"Init\"", ",", "\"Handler\"", ",", 
-                    "\"Default\"", ",", "\"Deserializer\"", ",", 
-                    "\"Serializer\"", ",", "\"Self\"", ",", 
-                    "\"Properties\""}], "}"}], "SummaryItem"]}], 
-               "\[SpanFromLeft]"}}, 
+                    "\"Icon\"", ",", "\"Init\"", ",", "\"MessageHandler\"", 
+                    ",", "\"DefaultMessageHandler\"", ",", "\"Deserializer\"",
+                     ",", "\"Serializer\"", ",", "\"Logger\"", ",", 
+                    "\"Self\"", ",", "\"Properties\""}], "}"}], 
+                  "SummaryItem"]}], "\[SpanFromLeft]"}}, 
              GridBoxAlignment -> {
               "Columns" -> {{Left}}, "Rows" -> {{Automatic}}}, AutoDelete -> 
              False, GridBoxItemSize -> {
@@ -1667,8 +1652,8 @@ VNRInI88Rh4jj5HHyGPkMfL4pXr8f3YiCIQ=
                  TagBox["\"Self: \"", "SummaryItemAnnotation"], 
                  "\[InvisibleSpace]", 
                  TagBox[
-                 "KirillBelov`HTTPHandler`HTTPHandler`$4722", 
-                  "SummaryItem"]}], "\[SpanFromLeft]"}, {
+                 "KirillBelov`HTTPHandler`HTTPHandler`$12", "SummaryItem"]}], 
+               "\[SpanFromLeft]"}, {
                RowBox[{
                  TagBox["\"Properties: \"", "SummaryItemAnnotation"], 
                  "\[InvisibleSpace]", 
@@ -1676,11 +1661,11 @@ VNRInI88Rh4jj5HHyGPkMfL4pXr8f3YiCIQ=
                   RowBox[{"{", 
                     
                     RowBox[{
-                    "\"Icon\"", ",", "\"Init\"", ",", "\"Handler\"", ",", 
-                    "\"Default\"", ",", "\"Deserializer\"", ",", 
-                    "\"Serializer\"", ",", "\"Self\"", ",", 
-                    "\"Properties\""}], "}"}], "SummaryItem"]}], 
-               "\[SpanFromLeft]"}}, 
+                    "\"Icon\"", ",", "\"Init\"", ",", "\"MessageHandler\"", 
+                    ",", "\"DefaultMessageHandler\"", ",", "\"Deserializer\"",
+                     ",", "\"Serializer\"", ",", "\"Logger\"", ",", 
+                    "\"Self\"", ",", "\"Properties\""}], "}"}], 
+                  "SummaryItem"]}], "\[SpanFromLeft]"}}, 
              GridBoxAlignment -> {
               "Columns" -> {{Left}}, "Rows" -> {{Automatic}}}, AutoDelete -> 
              False, GridBoxItemSize -> {
@@ -1697,15 +1682,14 @@ VNRInI88Rh4jj5HHyGPkMfL4pXr8f3YiCIQ=
        Dynamic[Typeset`open$$], ImageSize -> Automatic]},
      "SummaryPanel"],
     DynamicModuleValues:>{}], "]"}],
-  KirillBelov`HTTPHandler`HTTPHandler[
-  KirillBelov`HTTPHandler`HTTPHandler`$4722],
+  KirillBelov`HTTPHandler`HTTPHandler[KirillBelov`HTTPHandler`HTTPHandler`$12],
   Editable->False,
   SelectWithContents->True,
   Selectable->False]], "Output",
  TaggingRules->{},
  CellTags->"DefaultContent",
- CellLabel->"Out[3]=",
- CellID->143955093,ExpressionUUID->"3a90beeb-e012-4729-9b08-ecc71849f5c5"]
+ CellLabel->"Out[12]=",
+ CellID->478098355,ExpressionUUID->"f42adeff-b83a-4954-8acb-4d8cc4d5f246"]
 }, Open  ]],
 
 Cell["Example request:", "Text",
@@ -1721,7 +1705,7 @@ Cell[BoxData[
    "\"\<GET /point?x=1&y=2 HTTP/1.1\\r\\nConnection: keep-alive\\r\\n\\r\\n\>\
 \"", "]"}]}]], "Input",
  TaggingRules->{},
- CellLabel->"In[7]:=",
+ CellLabel->"In[13]:=",
  CellID->173966756,ExpressionUUID->"d4157db8-7e37-412e-beac-8b16ae797b6d"],
 
 Cell[BoxData[
@@ -1773,8 +1757,8 @@ Cell[BoxData[
   SelectWithContents->True,
   Selectable->False]], "Output",
  TaggingRules->{},
- CellLabel->"Out[7]=",
- CellID->99044835,ExpressionUUID->"757f9ba6-0f14-4f7a-9b8d-2fcdaf0c8da6"]
+ CellLabel->"Out[13]=",
+ CellID->431676066,ExpressionUUID->"a732a83d-77ab-4e34-b267-cf210e1d3b93"]
 }, Open  ]],
 
 Cell["Fake socket:", "Text",
@@ -1785,87 +1769,41 @@ Cell[CellGroupData[{
 
 Cell[BoxData[
  RowBox[{"socket", " ", "=", " ", 
-  RowBox[{"SocketObject", "[", "\"\<fake_socket\>\"", "]"}]}]], "Input",
+  RowBox[{"CSocket", "[", "\"\<fake_socket\>\"", "]"}]}]], "Input",
  TaggingRules->{},
- CellLabel->"In[8]:=",
+ CellLabel->"In[14]:=",
  CellID->92718608,ExpressionUUID->"2a9ea01e-ae2b-4f61-95b4-7af0f1dcac36"],
+
+Cell[BoxData[
+ RowBox[{"CSocket", "[", "\<\"fake_socket\"\>", "]"}]], "Output",
+ TaggingRules->{},
+ CellLabel->"Out[14]=",
+ CellID->19871317,ExpressionUUID->"e6233e5a-4040-4c47-8e9a-1d51b1f8f9f2"]
+}, Open  ]],
+
+Cell["Handler pair socket + request:", "Text",
+ TaggingRules->{},
+ CellID->646972312,ExpressionUUID->"ad4f24d5-5fc2-4e22-9989-84a6543cc292"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"http", "[", 
+  RowBox[{"socket", ",", " ", "request"}], "]"}]], "Input",
+ TaggingRules->{},
+ CellLabel->"In[15]:=",
+ CellID->327258278,ExpressionUUID->"2e4a5377-37c0-4057-b6ae-8a25008213a8"],
 
 Cell[BoxData[
  InterpretationBox[
   RowBox[{
-   TagBox["SocketObject",
+   TagBox["ByteArray",
     "SummaryHead"], "[", 
    DynamicModuleBox[{Typeset`open$$ = False, Typeset`embedState$$ = "Ready"}, 
     TemplateBox[{
       PaneSelectorBox[{False -> GridBox[{{
-            GraphicsBox[
-             GeometricTransformationBox[{{{
-                 FilledCurveBox[{{
-                    
-                    Line[{{36.558, 8.569}, {40.947, 8.569}, {40.947, 
-                    43.684000000000005`}, {36.558, 43.684000000000005`}, {
-                    36.558, 8.569}}]}}]}, {
-                 FilledCurveBox[{{
-                    
-                    Line[{{59.053, 8.569}, {63.443, 8.569}, {63.443, 
-                    43.684000000000005`}, {59.053, 43.684000000000005`}, {
-                    59.053, 8.569}}]}}]}, {{
-                  FilledCurveBox[{{
-                    
-                    Line[{{55.487, 8.569}, {56.95, 8.569}, {56.95, 
-                    21.188000000000002`}, {55.487, 21.188000000000002`}, {
-                    55.487, 8.569}}]}}]}, {
-                  FilledCurveBox[{{
-                    
-                    Line[{{52.562, 8.569}, {54.025, 8.569}, {54.025, 
-                    21.188000000000002`}, {52.562, 21.188000000000002`}, {
-                    52.562, 8.569}}]}}]}, {
-                  FilledCurveBox[{{
-                    
-                    Line[{{49.636, 8.569}, {51.099000000000004`, 8.569}, {
-                    51.099000000000004`, 21.188000000000002`}, {49.636, 
-                    21.188000000000002`}, {49.636, 8.569}}]}}]}, {
-                  FilledCurveBox[{{
-                    
-                    Line[{{46.709, 8.569}, {48.172000000000004`, 8.569}, {
-                    48.172000000000004`, 21.188000000000002`}, {46.709, 
-                    21.188000000000002`}, {46.709, 8.569}}]}}]}, {
-                  FilledCurveBox[{{
-                    
-                    Line[{{43.783, 8.569}, {45.246, 8.569}, {45.246, 
-                    21.188000000000002`}, {43.783, 21.188000000000002`}, {
-                    43.783, 8.569}}]}}]}}, {
-                 FilledCurveBox[{{
-                    
-                    Line[{{40.947, 4.911}, {59.787000000000006`, 4.911}, {
-                    59.787000000000006`, 6.922}, {40.947, 6.922}, {40.947, 
-                    4.911}}]}}]}, {
-                 FilledCurveBox[{{
-                    
-                    Line[{{44.057, 31.675}, {56.678000000000004`, 31.675}, {
-                    56.678000000000004`, 39.051}, {44.057, 39.051}, {44.057, 
-                    31.675}}]}}]}, {
-                 FilledCurveBox[{{
-                    
-                    Line[{{44.057, 43.685}, {56.678000000000004`, 43.685}, {
-                    56.678000000000004`, 65.089}, {44.057, 65.089}, {44.057, 
-                    43.685}}]}}]}}}, {{{1, 0}, {0, -1}}, Center}], {
-             ImageSize -> {Automatic, 
-                Dynamic[
-                3.5 (CurrentValue["FontCapHeight"]/AbsoluteCurrentValue[
-                  Magnification])]}, PlotRange -> {{20, 80}, {0, 70}}, 
-              BaseStyle -> {CacheGraphics -> False}, ImageSize -> 30}], 
             GridBox[{{
-               RowBox[{
-                 TagBox["\"UUID: \"", "SummaryItemAnnotation"], 
-                 "\[InvisibleSpace]", 
-                 TagBox[
-                  StyleBox["\"fake_socket\"", Italic, StripOnInput -> False], 
-                  "SummaryItem"]}]}, {
-               RowBox[{
-                 TagBox["\"Inactive\"", "SummaryItemAnnotation"], 
-                 "\[InvisibleSpace]", 
-                 TagBox["\"\"", "SummaryItem"]}]}}, 
+               TagBox["\"631 bytes\"", "SummaryItem"]}}, 
              GridBoxAlignment -> {
               "Columns" -> {{Left}}, "Rows" -> {{Automatic}}}, AutoDelete -> 
              False, GridBoxItemSize -> {
@@ -1879,73 +1817,8 @@ Cell[BoxData[
           GridBoxItemSize -> {
            "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}, 
           BaselinePosition -> {1, 1}], True -> GridBox[{{
-            GraphicsBox[
-             GeometricTransformationBox[{{{
-                 FilledCurveBox[{{
-                    
-                    Line[{{36.558, 8.569}, {40.947, 8.569}, {40.947, 
-                    43.684000000000005`}, {36.558, 43.684000000000005`}, {
-                    36.558, 8.569}}]}}]}, {
-                 FilledCurveBox[{{
-                    
-                    Line[{{59.053, 8.569}, {63.443, 8.569}, {63.443, 
-                    43.684000000000005`}, {59.053, 43.684000000000005`}, {
-                    59.053, 8.569}}]}}]}, {{
-                  FilledCurveBox[{{
-                    
-                    Line[{{55.487, 8.569}, {56.95, 8.569}, {56.95, 
-                    21.188000000000002`}, {55.487, 21.188000000000002`}, {
-                    55.487, 8.569}}]}}]}, {
-                  FilledCurveBox[{{
-                    
-                    Line[{{52.562, 8.569}, {54.025, 8.569}, {54.025, 
-                    21.188000000000002`}, {52.562, 21.188000000000002`}, {
-                    52.562, 8.569}}]}}]}, {
-                  FilledCurveBox[{{
-                    
-                    Line[{{49.636, 8.569}, {51.099000000000004`, 8.569}, {
-                    51.099000000000004`, 21.188000000000002`}, {49.636, 
-                    21.188000000000002`}, {49.636, 8.569}}]}}]}, {
-                  FilledCurveBox[{{
-                    
-                    Line[{{46.709, 8.569}, {48.172000000000004`, 8.569}, {
-                    48.172000000000004`, 21.188000000000002`}, {46.709, 
-                    21.188000000000002`}, {46.709, 8.569}}]}}]}, {
-                  FilledCurveBox[{{
-                    Line[{{43.783, 8.569}, {45.246, 8.569}, {45.246, 
-                    21.188000000000002`}, {43.783, 21.188000000000002`}, {
-                    43.783, 8.569}}]}}]}}, {
-                 FilledCurveBox[{{
-                    
-                    Line[{{40.947, 4.911}, {59.787000000000006`, 4.911}, {
-                    59.787000000000006`, 6.922}, {40.947, 6.922}, {40.947, 
-                    4.911}}]}}]}, {
-                 FilledCurveBox[{{
-                    
-                    Line[{{44.057, 31.675}, {56.678000000000004`, 31.675}, {
-                    56.678000000000004`, 39.051}, {44.057, 39.051}, {44.057, 
-                    31.675}}]}}]}, {
-                 FilledCurveBox[{{
-                    
-                    Line[{{44.057, 43.685}, {56.678000000000004`, 43.685}, {
-                    56.678000000000004`, 65.089}, {44.057, 65.089}, {44.057, 
-                    43.685}}]}}]}}}, {{{1, 0}, {0, -1}}, Center}], {
-             ImageSize -> {Automatic, 
-                Dynamic[
-                3.5 (CurrentValue["FontCapHeight"]/AbsoluteCurrentValue[
-                  Magnification])]}, PlotRange -> {{20, 80}, {0, 70}}, 
-              BaseStyle -> {CacheGraphics -> False}, ImageSize -> 30}], 
             GridBox[{{
-               RowBox[{
-                 TagBox["\"UUID: \"", "SummaryItemAnnotation"], 
-                 "\[InvisibleSpace]", 
-                 TagBox[
-                  StyleBox["\"fake_socket\"", Italic, StripOnInput -> False], 
-                  "SummaryItem"]}]}, {
-               RowBox[{
-                 TagBox["\"Inactive\"", "SummaryItemAnnotation"], 
-                 "\[InvisibleSpace]", 
-                 TagBox["\"\"", "SummaryItem"]}]}}, 
+               TagBox["\"631 bytes\"", "SummaryItem"]}}, 
              GridBoxAlignment -> {
               "Columns" -> {{Left}}, "Rows" -> {{Automatic}}}, AutoDelete -> 
              False, GridBoxItemSize -> {
@@ -1962,33 +1835,21 @@ Cell[BoxData[
        Dynamic[Typeset`open$$], ImageSize -> Automatic]},
      "SummaryPanel"],
     DynamicModuleValues:>{}], "]"}],
-  SocketObject["fake_socket"],
+  ByteArray[CompressedData["
+1:eJydkVtLwzAUgKtvDfQ/zCD0xbl14IO+rSIW5rCO4osbNFuPazAkIz2t9t+b
+1HYb6oYIIZzbd65nSzVbnjiO837qOFGSxIPgMuiNhsPe48Qjt0oiSOw/gFxj
+ftO7ug484pEX4tIJ11yIEISqUstFTGYCdBprXjGE9DyDV1YKnEJRsDW0bnpB
+XEO7dFwUasUZciWtrTG6dFYKaFSX+lPAXGV+p97fJT414uL36Jhhvo2dDzaK
+SzwW/1SCrlug8f5sqXPsgxb98Hdy0NRoqxwC6j1g1AGk/Q709wy6MI1sR7Ir
+ntvbHBsqApYZ7n9jmVtLWOGuqDW+AWz6TPAK/th3qLJvaw1rhLHWrG6zUv8r
+VZOEmLf4BOsJgTw=
+   "]],
   Editable->False,
   SelectWithContents->True,
   Selectable->False]], "Output",
  TaggingRules->{},
- CellLabel->"Out[8]=",
- CellID->57716407,ExpressionUUID->"6ae07ab8-5f08-497c-87d5-b02d6b5dbc0e"]
-}, Open  ]],
-
-Cell["Handler pair socket + request:", "Text",
- TaggingRules->{},
- CellID->646972312,ExpressionUUID->"ad4f24d5-5fc2-4e22-9989-84a6543cc292"],
-
-Cell[CellGroupData[{
-
-Cell[BoxData[
- RowBox[{"http", "[", 
-  RowBox[{"socket", ",", " ", "request"}], "]"}]], "Input",
- TaggingRules->{},
- CellLabel->"In[9]:=",
- CellID->327258278,ExpressionUUID->"2e4a5377-37c0-4057-b6ae-8a25008213a8"],
-
-Cell[BoxData["\<\"HTTP/1.1 404 OK\\r\\nContent-Length: 9\\r\\n\\r\\nNot found\
-\"\>"], "Output",
- TaggingRules->{},
- CellLabel->"Out[9]=",
- CellID->128233309,ExpressionUUID->"21e41121-8275-482c-a429-51c2cf463d0b"]
+ CellLabel->"Out[15]=",
+ CellID->98776370,ExpressionUUID->"51dc2b40-fd94-4977-a265-94b8d2636918"]
 }, Open  ]],
 
 Cell["Add handler:", "Text",
@@ -2992,8 +2853,7 @@ Cell[BoxData[
           TemplateBox[{
             CheckboxBox["Session", {False, "Session"}], "\" \"", 
             
-            TemplateBox[{
-             "\"Session\"", "\"Local or cloud interactive \""}, 
+            TemplateBox[{"\"Session\"", "\"Local or cloud interactive \""}, 
              "PrettyTooltipTemplate"]},
            "RowDefault"],
           StripOnInput->False,
@@ -4087,8 +3947,8 @@ Cell["Additional information about limitations, issues, etc.", "Text",
 }, Open  ]]
 }, Open  ]]
 },
-WindowSize->{827, 816},
-WindowMargins->{{Automatic, 37}, {53, Automatic}},
+WindowSize->{958, 980},
+WindowMargins->{{Automatic, -7}, {Automatic, 0}},
 WindowTitle->"HTTPHandler | Definition Notebook",
 DockedCells->{
   Cell[
@@ -4166,7 +4026,7 @@ bTKmjAgdMBEA4VKhMK0NzuQ=
 CreateCellID->True,
 DynamicEvaluationTimeout->60,
 TrackCellChangeTimes->False,
-FrontEndVersion->"13.2 for Microsoft Windows (64-bit) (January 30, 2023)",
+FrontEndVersion->"13.3 for Microsoft Windows (64-bit) (June 3, 2023)",
 StyleDefinitions->Notebook[{
    Cell[
     StyleData[StyleDefinitions -> "Default.nb"]], 
@@ -12031,7 +11891,7 @@ GRPf1sw3cDj8VSOm/5G9w5vAHXKt3IZQ/0HDoQHBFwFFwBcEHxR9zQlGcP3o
    Cell[
     StyleData["AttachedMessage"], Deletable -> True, 
     CellMargins -> {{60, 40}, {15, 5}}]}, Visible -> False, FrontEndVersion -> 
-  "13.2 for Microsoft Windows (64-bit) (January 30, 2023)", StyleDefinitions -> 
+  "13.3 for Microsoft Windows (64-bit) (June 3, 2023)", StyleDefinitions -> 
   "PrivateStylesheetFormatting.nb"],
 ExpressionUUID->"54f968bc-4098-4f67-b06b-949e37eaa0a0"
 ]
