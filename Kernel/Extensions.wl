@@ -48,6 +48,9 @@ ProcessMultipart::usage =
 "ProcessMultipart[request] returns processed request with a POST data decrypted."; 
 
 
+SetMIMETable::usage =
+"SetMIMETable[table_Association] sets a custom MIME types table"
+
 Begin["`Private`"]; 
 
 
@@ -135,6 +138,7 @@ DirectoryName[$InputFileName];
 $mimeTypes = 
 Get[FileNameJoin[{$directory, "MIMETypes.wl"}]];
 
+SetMIMETable[assoc_Association] := $mimeTypes = assoc
 
 GetMIMEType[request_Association] := 
 GetMIMEType[URLPathToFileName[request["Path"]]]; 
