@@ -44,7 +44,8 @@ Once[If[PacletFind["KirillBelov/TCPServer"] === {}, PacletInstall["KirillBelov/T
 
 BeginPackage["KirillBelov`HTTPHandler`", {
 	"KirillBelov`Objects`", 
-	"KirillBelov`Internal`"
+	"KirillBelov`Internal`", 
+	"KirillBelov`CSocketListener`"
 }]; 
 
 
@@ -78,7 +79,7 @@ Begin["`Private`"];
 (*HTTPPacketQ*)
 
 
-HTTPPacketQ[client_SocketObject, message_ByteArray] := 
+HTTPPacketQ[client: _SocketObject | _CSocket, message_ByteArray] := 
 Module[{head}, 
 	head = ByteArrayToString[BytesSplit[message, $httpEndOfHead -> 1][[1]]]; 
 	
@@ -98,7 +99,7 @@ Module[{head},
 (*HTTPPacketLength*)
 
 
-HTTPPacketLength[client_SocketObject, message_ByteArray] := 
+HTTPPacketLength[client: _SocketObject | _CSocket, message_ByteArray] := 
 Module[{head}, 
 	head = ByteArrayToString[BytesSplit[message, $httpEndOfHead -> 1][[1]]]; 
 
@@ -118,14 +119,14 @@ Module[{head},
 
 CreateType[HTTPHandler, {
 	"MessageHandler" -> <||>, 
-	"DefaultMessageHandler" -> $HTTPDefaultMessageHandler, 
-	"Deserializer" -> $HTTPDeserializer, 
-	"Serializer" -> $HTTPSerializer, 
+	"DefaultMessageHandler" -> $defaultMessageHandler, 
+	"Deserializer" -> $deserializer, 
+	"Serializer" -> $serializer, 
 	"Logger" -> Automatic
 }]; 
 
 
-handler_HTTPHandler[client_SocketObject, message_ByteArray] := 
+handler_HTTPHandler[client: _SocketObject | _CSocket, message_ByteArray] := 
 Module[{request, response, pipeline, result, deserializer, serializer, messageHandler, defaultMessageHandler, logger}, 
 	deserializer = handler["Deserializer"]; 
 	serializer = handler["Serializer"]; 
@@ -148,7 +149,7 @@ Module[{request, response, pipeline, result, deserializer, serializer, messageHa
 	response = createResponse[result, serializer]; 
 	logger["Response", response]; 
 
-	(*Return: _String | _ByteArray*)
+	(*Return: _String | ByteArray[]*)
 	response
 ]; 
 
@@ -224,11 +225,11 @@ Module[{response = assoc, body, headers},
 		"Content-Length" -> StringLength[body]
 	|>];  
 
-	(*Return: _String*)
-	StringTemplate["HTTP/1.1 `Code` `Message`\r\n"][response] <> 
+	(*Return: ByteArray[]*)
+	StringToByteArray[StringTemplate["HTTP/1.1 `Code` `Message`\r\n"][response] <> 
 	StringRiffle[KeyValueMap[StringRiffle[{#1, ToString[#2]}, ": "]&] @ response["Headers"], "\r\n"] <> 
 	"\r\n\r\n" <> 
-	body
+	body]
 ]; 
 
 
@@ -236,20 +237,32 @@ Module[{response = assoc, body, headers},
 (*Serialization*)
 
 
-$HTTPDeserializer[headers_Association, body_ByteArray] := 
+$deserializer[headers_Association, body_ByteArray] := 
 body; 
 
 
-$HTTPSerializer[expr_] := 
-ToString[expr]; 
+$serializer[expr_] := 
+ExportString[expr, "ExpressionJSON"]; 
 
 
-$HTTPSerializer[image_Image] := 
+$serializer[assoc_Association] := 
+ExportString[assoc, "RawJSON"]; 
+
+
+$serializer[list_List] := 
+ExportString[list, "RawJSON"]; 
+
+
+$serializer[image_Image] := 
 ExportString[image, "PNG"]; 
 
 
-$HTTPSerializer[text_String] := 
-text; 
+$serializer[image_Graphics] := 
+ExportString[image, "SVG"]; 
+
+
+$serializer[text_String] := 
+ExportString[text, "Text"]; 
 
 
 (* ::Section::Closed:: *)

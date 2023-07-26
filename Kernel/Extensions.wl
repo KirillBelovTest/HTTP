@@ -32,7 +32,7 @@ FileNameToURLPath::usage =
 "FileNameToURLPath[file] to url."; 
 
 
-ImportFileAsText::usage = 
+ImportFile::usage = 
 "ImportFileAsText[request] import file from request as text data."; 
 
 
@@ -75,62 +75,41 @@ FileNameToURLPath[fileName_String] :=
 URLBuild[FileNameSplit[StringTrim[fileName, StartOfString ~~ Directory[]]]]; 
 
 
-Options[ImportFileAsText] = {"Base" :> {Directory[]}, "StringOutput"->False}
+Options[ImportFileAsText] = {"Base" :> {Directory[]}}
 
 
-ImportFileAsText[file_String, OptionsPattern[]] := 
+ImportFileAsText[file_String] := 
 If[FileExistsQ[file], 
     With[{body = Import[file, "String"]},
-        If[!OptionValue["StringOutput"],
-            <|
-                "Body" -> body, 
-                "Code" -> 200, 
-                "Headers" -> <|
-                    "Content-Type" -> GetMIMEType[file], 
-                    "Content-Length" -> StringLength[body], 
-                    "Connection"-> "Keep-Alive", 
-                    "Keep-Alive" -> "timeout=5, max=1000", 
-                    "Cache-Control" -> "max-age=60480"
-                |>
+        <|
+            "Body" -> body, 
+            "Code" -> 200, 
+            "Headers" -> <|
+                "Content-Type" -> GetMIMEType[file], 
+                "Content-Length" -> StringLength[body], 
+                "Connection"-> "Keep-Alive", 
+                "Keep-Alive" -> "timeout=5, max=1000", 
+                "Cache-Control" -> "max-age=60480"
             |>
-        ,
-            body
-        ] 
+        |> 
     ], 
 
-(*Else*)
-    <|"Code" -> 404|>
+        (*Else*)
+            <|"Code" -> 404|>
+        ]
+    ]
 ]; 
 
-ImportFileAsText["", file_String] := 
-    If[FileExistsQ[file],
-        With[{body = Import[file, "String"]},
-            <|"Body"->body, "Code"->200, "Headers"-><|"Content-Type" -> GetMIMEType[file], "Content-Length" -> StringLength[body], "Connection"-> "Keep-Alive", "Keep-Alive" -> "timeout=5, max=1000", "Cache-Control" -> "max-age=60480"|>|> 
-        ]
-    ,
-        <|"Code"->404, "Body"->""|>
-    ] 
 
-
-ImportFileAsText[base_List, name_String] := With[{file = Which@@Flatten[Map[
-    With[{path = If[# === "", name, FileNameJoin[{#, name}]]}, 
-    {
-        Unevaluated[Print["checking... "<>#]; path//FileExistsQ],
-        path
-    }] &, base]]},
-
-    If[file =!= Null,
-        With[{body = Import[file, "String"]},
-            <|"Body"->body, "Code"->200, "Headers"-><|"Content-Type" -> GetMIMEType[file], "Content-Length" -> StringLength[body], "Connection"-> "Keep-Alive", "Keep-Alive" -> "timeout=5, max=1000", "Cache-Control" -> "max-age=60480"|>|> 
-        ]
-    ,
-        <|"Code"->404, "Body"->""|>
-    ] 
-]
+ImportFile[request_Association, opts: OptionsPattern[]] := 
+ImportFile[URLPathToFileName[request["Path"]], opts]
 
 
 ImportFileAsText[request_Association, OptionsPattern[]] := (
 ImportFileAsText[OptionValue["Base"], URLPathToFileName[request["Path"]]])
+
+ImportFileAsText[name_String] := 
+ImportFileAsText[URLPathToFileName[name], ""]
 
 
 MIMETypes = Uncompress["1:eJytWFlv3DYQTlsH6N0kva+HPhdaxw1co30r0AMF+hT+gIJLURJtUWRIrsT6J/\
@@ -173,15 +152,24 @@ GetMIMEType[file_String] := Module[{type},
     type = MIMETypes[file // FileExtension];
 	If[!StringQ[type], type = "application/octet-stream"];
     type
-]
+]; 
 
 
-GetMIMEType[request_Association] := GetMIMEType[URLPathToFileName[request["Path"]]]
+$directory = 
+DirectoryName[$InputFileName];
+
+
+$mimeTypes = 
+Get[FileNameJoin[{$directory, "MIMETypes.wl"}]];
+
+
+GetMIMEType[request_Association] := 
+GetMIMEType[URLPathToFileName[request["Path"]]]; 
 
 
 $DeserializeUrlencoded[request_Association, body_ByteArray] := (
     <|<|URLParse["/?" <> (body//ByteArrayToString)]|>["Query"]|>
-)
+); 
 
 
 DecryptField[line_String] := 
@@ -282,19 +270,19 @@ ProcessMultipart[request_Association, OptionsPattern[]] := Module[{},
 ]; 
 
 
-Options[HypertextProcess] = {"Base" :> {Directory[]}}
+Options[HypertextProcess] = {
+    "Base" :> {Directory[]}
+}; 
 
 
 HypertextProcess[request_Association, OptionsPattern[]] := Module[{body},
-With[{file = URLPathToFileName[request]},
-
-    Block[{Global`$CurrentRequest = <||>},
-        Global`$CurrentRequest = request;
-        body = LoadPage[file, {}, "Base"->First@Flatten@{OptionValue["Base"]}];
+With[{file = URLPathToFileName[request]}, 
+    Block[{$CurrentRequest = request},
+        body = LoadPage[file, {}, "Base" -> First@Flatten@{OptionValue["Base"]}];
 
         (* handle special case for redirect *)
 
-        If[KeyExistsQ[Global`$CurrentRequest, "Redirect"],
+        If[KeyExistsQ[$CurrentRequest, "Redirect"],
             Print["Redirecting to "<>Global`$CurrentRequest["Redirect"]];
             <|  "Code"->201, "Body"->body, 
                 "Headers"-> <|"Content-Location" -> Global`$CurrentRequest["Redirect"], "Content-Length" -> StringLength[body]|>
