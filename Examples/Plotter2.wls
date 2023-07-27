@@ -35,7 +35,7 @@ http["MessageHandler", "WSP"] = GetFileRequestQ[{"wsp"}] -> (HypertextProcess[#,
 
 (* ::End:: *)
 
-httplistener = SocketListen[8000, tcp@#&]
+httplistener = CSocketListen[8000, tcp@#&]
 
 Print["Staring WS/HTTP server..."];
 
@@ -47,13 +47,13 @@ ws = WebSocketHandler[]
 
 ws["MessageHandler", "Evaluate"]  = Function[True] -> evaluate
 
-evaluate[cl_SocketObject, data_ByteArray] := Block[{Global`client = cl},
+evaluate[cl_, data_ByteArray] := Block[{Global`client = cl},
     Print["--------------------------------"];
     Print[data//ByteArrayToString];
     ToExpression[data//ByteArrayToString];
 ]
 
-SocketListen[8005, wcp@#&]
+CSocketListen[8005, wcp@#&]
 
 SetOptions[WSPEngine, "Cache"->False];
 
