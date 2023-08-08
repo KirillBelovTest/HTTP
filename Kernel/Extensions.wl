@@ -67,7 +67,7 @@ GetPOSTRequestQ[fileType: _String | {__String} | _StringExpression] :=
 AssocMatchQ[<|"Method" -> "POST", "Path" -> "/" ~~ ___ ~~ "." ~~ fileType|>];
 
 URLPathToFileName[urlPath_String] := 
-FileNameJoin[FileNameSplit[StringTrim[urlPath, "/"]]]; 
+FileNameJoin[FileNameSplit[StringTrim[urlPath // URLDecode, "/"]]]; 
 
 
 URLPathToFileName[request_Association] := 
@@ -260,7 +260,7 @@ With[{file = URLPathToFileName[request]},
 
         (* handle special case for redirect *)
 
-        If[KeyExistsQ[$CurrentRequest, "Redirect"],
+        If[KeyExistsQ[Global`$CurrentRequest, "Redirect"],
             Print["Redirecting to "<>Global`$CurrentRequest["Redirect"]];
             <|  "Code"->201, "Body"->body, 
                 "Headers"-> <|"Content-Location" -> Global`$CurrentRequest["Redirect"], "Content-Length" -> StringLength[body]|>
