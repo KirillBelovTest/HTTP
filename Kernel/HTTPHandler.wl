@@ -45,7 +45,7 @@ Once[If[PacletFind["KirillBelov/TCPServer"] === {}, PacletInstall["KirillBelov/T
 BeginPackage["KirillBelov`HTTPHandler`", {
 	"KirillBelov`Objects`", 
 	"KirillBelov`Internal`", 
-	"KirillBelov`CSocketListener`"
+	"KirillBelov`CSockets`"
 }]; 
 
 
@@ -79,7 +79,7 @@ Begin["`Private`"];
 (*HTTPPacketQ*)
 
 
-HTTPPacketQ[client: _SocketObject | _CSocket, message_ByteArray] := 
+HTTPPacketQ[client: _SocketObject | _CSocketObject, message_ByteArray] := 
 Module[{head}, 
 	head = ByteArrayToString[BytesSplit[message, $httpEndOfHead -> 1][[1]]]; 
 	
@@ -99,7 +99,7 @@ Module[{head},
 (*HTTPPacketLength*)
 
 
-HTTPPacketLength[client: _SocketObject | _CSocket, message_ByteArray] := 
+HTTPPacketLength[client: _SocketObject | _CSocketObject, message_ByteArray] := 
 Module[{head}, 
 	head = ByteArrayToString[BytesSplit[message, $httpEndOfHead -> 1][[1]]]; 
 
@@ -126,7 +126,7 @@ CreateType[HTTPHandler, {
 }]; 
 
 
-handler_HTTPHandler[client: _SocketObject | _CSocket, message_ByteArray] := 
+handler_HTTPHandler[client: _SocketObject | _CSocketObject, message_ByteArray] := 
 Module[{request, response, pipeline, result, deserializer, serializer, messageHandler, defaultMessageHandler, logger}, 
 	deserializer = handler["Deserializer"]; 
 	serializer = handler["Serializer"]; 
