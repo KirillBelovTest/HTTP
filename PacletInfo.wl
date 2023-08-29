@@ -7,16 +7,25 @@ PacletObject[
     "Creator" -> "Kirill Belov",
     "License" -> "MIT",
     "PublisherID" -> "KirillBelov",
-    "Version" -> "1.0.5",
+    "Version" -> "1.0.6",
     "WolframVersion" -> "13+",
     "Extensions" -> {
       {
         "Kernel",
         "Root" -> "Kernel",
         "Context" -> {
-          {"KirillBelov`HTTPHandler`", "HTTPHandler.wl"}, 
-          {"KirillBelov`HTTPHandler`Extensions`", "Extensions.wl"}, 
-          {"KirillBelov`HTTPHandler`WSPAdapter`", "WSPAdapter.wl"}
+          {
+            "KirillBelov`HTTPHandler`",
+            "HTTPHandler.wl"
+          },
+          {
+            "KirillBelov`HTTPHandler`Extensions`",
+            "Extensions.wl"
+          },
+          {
+            "KirillBelov`HTTPHandler`WSPAdapter`",
+            "WSPAdapter.wl"
+          }
         },
         "Symbols" -> {}
       },
