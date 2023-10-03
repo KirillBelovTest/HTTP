@@ -118,9 +118,9 @@ Module[{head},
 
 CreateType[HTTPHandler, {
 	"MessageHandler" -> <||>, 
-	"DefaultMessageHandler" -> $defaultMessageHandler, 
-	"Deserializer" -> $deserializer, 
-	"Serializer" -> $serializer, 
+	"DefaultMessageHandler" -> $messageHandler, 
+	"Deserializer" -> <||>, 
+	"Serializer" -> <||>, 
 	"Logger" -> Automatic
 }]; 
 
@@ -188,7 +188,7 @@ Module[{headBytes, head, headline, headers, body, bodyBytes},
   		StringExtract[head, "\r\n\r\n" -> 1, "\r\n" -> 2 ;; ]
 	]; 
 
-	body = ConditionApply[deserializer, #2&][headers, bodyBytes]; 
+	body = ConditionApply[deserializer, $deserializer][headers, bodyBytes]; 
 
 	(*Return: Association[
 		Metod, 
@@ -217,7 +217,7 @@ createResponse[
 
 createResponse[assoc_Association, serializer_] := 
 Module[{response = assoc, body, headers}, 
-	body = ConditionApply[serializer, ToString][response["Body"]]; 
+	body = ConditionApply[serializer, $serializer][response["Body"]]; 
 
 
 	If[Not[KeyExistsQ[response, "Message"]], response["Message"] = "OK"]; 
@@ -239,6 +239,14 @@ Module[{response = assoc, body, headers},
 	]
 
 ]; 
+
+
+(* ::Section::Closed:: *)
+(*Default message handler*)
+
+
+$messageHandler = 
+Function[<|"Code" -> 404, "Body" -> "NotFound"|>];
 
 
 (* ::Section::Closed:: *)
@@ -270,7 +278,7 @@ ExportString[image, "SVG"];
 
 
 $serializer[text_String] := 
-ExportString[text, "Text"]; 
+text; 
 
 $serializer[bytes_ByteArray] := 
 bytes
