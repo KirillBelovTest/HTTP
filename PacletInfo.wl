@@ -7,7 +7,7 @@ PacletObject[
     "Creator" -> "Kirill Belov",
     "License" -> "MIT",
     "PublisherID" -> "KirillBelov",
-    "Version" -> "1.0.7",
+    "Version" -> "1.0.8",
     "WolframVersion" -> "13+",
     "Extensions" -> {
       {
@@ -19,12 +19,8 @@ PacletObject[
             "HTTPHandler.wl"
           },
           {
-            "KirillBelov`HTTPHandler`Extensions`",
-            "Extensions.wl"
-          },
-          {
-            "KirillBelov`HTTPHandler`WSPAdapter`",
-            "WSPAdapter.wl"
+            "KirillBelov`HTTPHandler`Serialization`",
+            "Serialization.wl"
           }
         },
         "Symbols" -> {}

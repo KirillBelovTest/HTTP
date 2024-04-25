@@ -81,6 +81,7 @@ URLBuild[FileNameSplit[StringTrim[fileName, StartOfString ~~ Directory[]]]];
 Options[ImportFile] = {"Base" :> {Directory[]}, "StringOutput"->False}
 Options[importFile] = Options[ImportFile]
 
+
 importFile[path_String, opts:OptionsPattern[]] := With[{body = ReadByteArray[path]},
       If[!OptionValue["StringOutput"],
         <|
@@ -100,21 +101,13 @@ importFile[path_String, opts:OptionsPattern[]] := With[{body = ReadByteArray[pat
     ]
 
 ImportFile[file_String, opts:OptionsPattern[]] := Module[{paths = Flatten[OptionValue["Base"]]},
-    
-    With[{path = FileNameJoin[{#, file}]},
-     If[
-         Print["Checking "<>path<>"..."];
-         FileExistsQ[path]
-     ,
-         Return[importFile[path, opts], Module]
-     ]
-    ] &/@ paths;
-
-    Print["file "<>file<>" was not found ;()"];
+With[{path = FileNameJoin[{#, file}]}, 
+    If[FileExistsQ[path],
+        Return[importFile[path, opts], Module]
+    ]]& /@ paths;
 
     <|"Code" -> 404|>
-]
-
+]; 
 
 
 ImportFile[request_Association, opts: OptionsPattern[]] := 
@@ -235,12 +228,10 @@ ProcessMultipart[request_Association, OptionsPattern[]] := Module[{},
     (* Return request_Association *)
 
     If[StringMatchQ[request["Headers"]["Content-Type"], "application/x-www-form-urlencoded" ~~ ___],
-        Print["URL Encoded detected"];
         Return[Join[request, <|"Data"->$DeserializeUrlencoded[request, request["Body"]], "Body"->{}|>]]
     ];
 
     If[StringMatchQ[request["Headers"]["Content-Type"], "multipart/form-data" ~~ ___],
-        Print["Multipart detected"];
         Return[Join[request, <|"Data"->$DeserializeMultipart[request, request["Body"]], "Body"->{}|>]]
     ];
 
@@ -261,10 +252,9 @@ With[{file = URLPathToFileName[request]},
         (* handle special case for redirect *)
 
         If[KeyExistsQ[Global`$CurrentRequest, "Redirect"],
-            Print["Redirecting to "<>Global`$CurrentRequest["Redirect"]];
-            <|  "Code"->201, "Body"->body, 
+            Return[<|  "Code"->201, "Body"->body, 
                 "Headers"-> <|"Content-Location" -> Global`$CurrentRequest["Redirect"], "Content-Length" -> StringLength[body]|>
-            |> // Return
+            |>]
         ];
 
         body
@@ -281,10 +271,9 @@ With[{file = filename},
         (* handle special case for redirect *)
 
         If[KeyExistsQ[Global`$CurrentRequest, "Redirect"],
-            Print["Redirecting to "<>Global`$CurrentRequest["Redirect"]];
-            <|  "Code"->201, "Body"->body, 
+            Return[<|  "Code"->201, "Body"->body, 
                 "Headers"-> <|"Content-Location" -> Global`$CurrentRequest["Redirect"], "Content-Length" -> StringLength[body]|>
-            |> // Return
+            |>]
         ];
 
         body

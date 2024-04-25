@@ -44,7 +44,9 @@ Once[If[PacletFind["KirillBelov/TCPServer"] === {}, PacletInstall["KirillBelov/T
 
 BeginPackage["KirillBelov`HTTPHandler`", {
 	"KirillBelov`Objects`", 
-	"KirillBelov`Internal`"
+	"KirillBelov`Internal`", 
+	"KirillBelov`TCPServer`", 
+	"KirillBelov`HTTPHandler`Serialization`"
 }]; 
 
 
@@ -56,11 +58,11 @@ ClearAll["`*"]
 
 
 HTTPPacketQ::usage = 
-"HTTPPacketQ[client, message] check that message was sent via HTTP protocol."; 
+"HTTPPacketQ[packet] check that message was sent via HTTP protocol."; 
 
 
 HTTPPacketLength::usage = 
-"HTTPPacketLength[client, message] returns expected message length."; 
+"HTTPPacketLength[packet] returns expected message length."; 
 
 
 HTTPHandler::usage = 
@@ -78,17 +80,22 @@ Begin["`Private`"];
 (*HTTPPacketQ*)
 
 
-HTTPPacketQ[client_, message_ByteArray] := 
-Module[{head}, 
-	head = ByteArrayToString[BytesSplit[message, $httpEndOfHead -> 1][[1]]]; 
-	
-	(*Return: True | False*)
-	And[
-		StringLength[head] != Length[message], (* equivalent of the StringContainsQ[message, $httpEndOfHead] *)
-		StringContainsQ[head, StartOfString ~~ $httpMethods], 
-		Or[
-			StringContainsQ[head, StartOfLine ~~ "Connection: keep-alive", IgnoreCase -> True], 
-			StringContainsQ[head, StartOfLine ~~ "Connection: close", IgnoreCase -> True]
+HTTPPacketQ[___] := False; 
+
+
+HTTPPacketQ[packet_Association?AssociationQ] /; packet["Event"] === "Received" := 
+With[{message = packet["DataByteArray"]}, 
+	Module[{head}, 
+		head = ByteArrayToString[BytesSplit[message, $httpEndOfHead -> 1][[1]]]; 
+		
+		(*Return: True | False*)
+		And[
+			StringLength[head] != Length[message], (* equivalent of the StringContainsQ[message, $httpEndOfHead] *)
+			StringContainsQ[head, StartOfString ~~ $httpMethods], 
+			Or[
+				StringContainsQ[head, StartOfLine ~~ "Connection: keep-alive", IgnoreCase -> True], 
+				StringContainsQ[head, StartOfLine ~~ "Connection: close", IgnoreCase -> True]
+			]
 		]
 	]
 ]; 
@@ -98,16 +105,18 @@ Module[{head},
 (*HTTPPacketLength*)
 
 
-HTTPPacketLength[client_, message_ByteArray] := 
-Module[{head}, 
-	head = ByteArrayToString[BytesSplit[message, $httpEndOfHead -> 1][[1]]]; 
+HTTPPacketLength[packet_Association] := 
+With[{message = packet["DataByteArray"]}, 
+	Module[{head}, 
+		head = ByteArrayToString[BytesSplit[message, $httpEndOfHead -> 1][[1]]]; 
 
-	(*Return: _Integer*)
-	Which[
-		StringContainsQ[head, "Content-Length: ", IgnoreCase -> True], 
-			StringLength[head] + 4 + ToExpression[StringExtract[head, {"Content-Length: ", "content-length: "} -> 2, "\r\n" -> 1]], 
-		True, 
-			Length[message]
+		(*Return: _Integer*)
+		Which[
+			StringContainsQ[head, "Content-Length: ", IgnoreCase -> True], 
+				StringLength[head] + 4 + ToExpression[StringExtract[head, {"Content-Length: ", "content-length: "} -> 2, "\r\n" -> 1]], 
+			True, 
+				Length[message]
+		]
 	]
 ]; 
 
@@ -115,42 +124,51 @@ Module[{head},
 (* ::Section::Closed:: *)
 (*HTTPHandler*)
 
+(* ::Section::Closed:: *)
+(*Default message handler*)
+
 
 CreateType[HTTPHandler, {
 	"MessageHandler" -> <||>, 
-	"DefaultMessageHandler" -> $messageHandler, 
+	"DefaultMessageHandler" -> Function[<|"Code" -> 404, "Body" -> "NotFound"|>], 
 	"Deserializer" -> <||>, 
 	"Serializer" -> <||>, 
-	"Logger" -> Automatic
+	"Logger" -> None
 }]; 
 
 
-handler_HTTPHandler[client_, message_ByteArray] := 
-Module[{request, response, pipeline, result, deserializer, serializer, messageHandler, defaultMessageHandler, logger}, 
-	deserializer = handler["Deserializer"]; 
-	serializer = handler["Serializer"]; 
-	messageHandler = handler["MessageHandler"]; 
-	defaultMessageHandler = handler["DefaultMessageHandler"]; 
-	
-	(*Signature: logger[text_String, expr_]*)
-	logger = handler["Logger"]; 
-	logger["Request", message];
+handler_HTTPHandler[packet_Association] := 
+With[{message = packet["DataByteArray"]}, 
+	Module[{request, response, pipeline, result, deserializer, serializer, messageHandler, defaultMessageHandler}, 
+		deserializer = handler["Deserializer"]; 
+		serializer = handler["Serializer"]; 
+		messageHandler = handler["MessageHandler"]; 
+		defaultMessageHandler = handler["DefaultMessageHandler"]; 
+		
+		(*Request: _Association*)
+		request = parseRequest[message, deserializer]; 
 
-	(*Request: _Association*)
-	request = parseRequest[message, deserializer]; 
-	logger["Parsed", request]; 
+		(*Result: _String | _Association*)
+		result = ConditionApply[messageHandler, defaultMessageHandler][request]; 
 
-	(*Result: _String | _Association*)
-	result = ConditionApply[messageHandler, defaultMessageHandler][request]; 
-	logger["Result", result]; 
+		(*Result: HTTPResponse[]*)
+		response = createResponse[result, serializer]; 
 
-	(*Result: _String | _ByteArray*)
-	response = createResponse[result, serializer]; 
-	logger["Response", response]; 
-
-	(*Return: _String | ByteArray[]*)
-	response
+		(*Return: _String | ByteArray[]*)
+		ExportByteArray[response, "HTTPResponse"]
+	]
 ]; 
+
+
+(* ::Section::Closed:: *)
+(*Add HTTPHandler*)
+
+
+HTTPHandler /: AddTo[tcp_, http_HTTPHandler] := (
+	tcp["CompleteHandler", "HTTP"] = HTTPPacketQ -> HTTPPacketLength; 
+	tcp["MessageHandler", "HTTP"] = HTTPPacketQ -> http; 
+	tcp
+); 
 
 
 (* ::Section::Closed:: *)
@@ -167,11 +185,11 @@ $errorResponse = <|"Code" -> 404, "Body" -> "Not found"|>;
 
 
 parseRequest[message_ByteArray, deserializer_] := 
-Module[{headBytes, head, headline, headers, body, bodyBytes}, 
+Module[{request, headBytes, head, headers, body, bodyBytes}, 
 	{headBytes, bodyBytes} = BytesSplit[message, $httpEndOfHead -> 1]; 
 	head = ByteArrayToString[headBytes]; 
 	
-	headline = First @ StringCases[
+	request = First @ StringCases[
 		StringExtract[head, "\r\n" -> 1], 
 		method__ ~~ " " ~~ url__ ~~ " " ~~ version__ :> Join[
 			<|"Method" -> method|>, 
@@ -183,12 +201,13 @@ Module[{headBytes, head, headline, headers, body, bodyBytes},
 		IgnoreCase -> True
 	]; 
 
-	headers = Association[
+	request["Headers"] = Association[
 		Map[Rule[#1, StringRiffle[{##2}, ":"]]& @@ Map[StringTrim]@StringSplit[#, ":"] &]@
   		StringExtract[head, "\r\n\r\n" -> 1, "\r\n" -> 2 ;; ]
 	]; 
 
-	body = ConditionApply[deserializer, $deserializer][headers, bodyBytes]; 
+	request["BodyByteArray"] = bodyBytes; 
+	request["Body"] = ConditionApply[deserializer, HTTPDeserialize][request]; 
 
 	(*Return: Association[
 		Metod, 
@@ -196,57 +215,35 @@ Module[{headBytes, head, headline, headers, body, bodyBytes},
 		Query, 
 		Version, 
 		Headers, 
+		BodyByteArray, 
 		Body
 	]*)
-	Join[
-		headline, 
-		<|"Headers" -> headers, "Body" -> body|>
-	]
-]; 
-
-
-createResponse[body_, serializer_] := 
-createResponse[
-	<|
-		"Code" -> 200, 
-		"Body" -> body
-	|>, 
-	serializer
+	request
 ]; 
 
 
 createResponse[assoc_Association, serializer_] := 
-Module[{response = assoc, body, headers}, 
-	body = ConditionApply[serializer, $serializer][response["Body"]]; 
+Module[{data, body, headers, metadata}, 
+	data = ConditionApply[serializer, HTTPSerialize][assoc]; 
 
+	metadata = <|
+		"ContentType" -> "text/html; charset=utf-8", 
+		"Headers" -> <|"Content-Length" -> Length[data["Body"]]|>, 
+		"StatusCode" -> 200
+	|>; 
 
-	If[Not[KeyExistsQ[response, "Message"]], response["Message"] = "OK"]; 
-	If[Not[KeyExistsQ[response, "Headers"]], response["Headers"] = <|
-		"Content-Length" -> If[StringQ[body], StringLength[body], Length[body]]
-	|>];  
+	If[AssociationQ[data], 
+		If[KeyExistsQ[data, "ContentType"], metadata["ContentType"] = data["ContentType"]]; 
+		If[KeyExistsQ[data, "Headers"], metadata["Headers"] = data["Headers"] ~ Join ~ metadata["Headers"]]; 
+		If[KeyExistsQ[data, "StatusCode"], metadata["StatusCode"] = data["StatusCode"]]; 
+		If[KeyExistsQ[data, "Body"], body = data["Body"]]; 
+	]; 
 
-	(*Return: ByteArray[]*)
-	If[StringQ[body],
-		StringToByteArray[StringTemplate["HTTP/1.1 `Code` `Message`\r\n"][response] <> 
-		StringRiffle[KeyValueMap[StringRiffle[{#1, ToString[#2]}, ": "]&] @ response["Headers"], "\r\n"] <> 
-		"\r\n\r\n" <> 
-		body]	
-	,
-		Join[StringToByteArray[StringTemplate["HTTP/1.1 `Code` `Message`\r\n"][response] <> 
-		StringRiffle[KeyValueMap[StringRiffle[{#1, ToString[#2]}, ": "]&] @ response["Headers"], "\r\n"] <> 
-		"\r\n\r\n"],
-		body]		
-	]
+	If[StringQ[data] || ByteArrayQ[data], body = data]; 
 
+	(*Return: HTTPResponse[]*)
+	HTTPResponse[body, metadata]
 ]; 
-
-
-(* ::Section::Closed:: *)
-(*Default message handler*)
-
-
-$messageHandler = 
-Function[<|"Code" -> 404, "Body" -> "NotFound"|>];
 
 
 (* ::Section::Closed:: *)
