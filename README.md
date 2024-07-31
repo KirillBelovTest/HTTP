@@ -1,39 +1,48 @@
-# HTTPHandler
+# HTTP
 HTTP Handler for TCP Server designed for Wolfram Kernel (Mathematica, Engine)
 
 ## Installation
+
 Via Wolfram Paclet system
+
 ```mathematica
-PacletInstall["KirillBelov/HTTPHandler"]
+PacletInstall["KirillBelov/HTTP"]
 ```
 
 ## Examples
+
 Clone this repository
+
 ```bash
-git clone https://github.com/KirillBelovTest/HTTPHandler
-cd HTTPHandler
+git clone https://github.com/KirillBelovTest/HTTP
+cd HTTP
 ```
 
 There is a set of usefull example, that helps to understand the logic of a webserver and its applications
 
-### APIFunction 💎
+### APIFunction
+
 This basically replicates the functionalify of Wolfram `APIFunction` available in Cloud only. However, using our approach one can run it locally
+
 ```bash
 wolframscript -f Examples/APIFunction.wls
 ```
+
 then open your browser at
-```
+
+```url
 http://127.0.0.1:8000/cellular?rule=69&step=500
 http://127.0.0.1:8000/bars?v=1,2,3,4,5,6
 ```
 
 what it does, it provides the URL parameters to the defined API function and generates the result for the reply
 
-![](imgs/Screenshot%202023-07-26%20at%2011.25.44.png)
+![](./imgs/Screenshot%202023-07-26%20at%2011.25.44.png)
 
-![](imgs/Screenshot%202023-07-26%20at%2011.27.42.png)
+![](./imgs/Screenshot%202023-07-26%20at%2011.27.42.png)
 
-### StaticWebsite 📯
+### StaticWebsite
+
 This is a simple example of templating using `StringTemplate` to embed the data into an html document from the request parameters or call an arbitary Wolfram Language function 
 
 ```bash
@@ -42,9 +51,10 @@ wolframscript -f Examples/StaticWebsite.wls
 
 ![](imgs/Screenshot%202023-07-26%20at%2011.18.50.png)
 
-It also shows how to work with media files and paths for the server. Those two WL logos are requested from two different folders, specified in `Base` parameters as an array of paths. Also the current date and a list with request parameters shows how to embed the WL function into the document. 
+It also shows how to work with media files and paths for the server. Those two WL logos are requested from two different folders, specified in `Base` parameters as an array of paths. Also the current date and a list with request parameters shows how to embed the WL function into the document.  
 
-### FormExample 🪩
+### FormExample
+
 A bit more advanced example - a follow up to `APIFunction` - that unleash to power of modern HTML/CSS stack and POST method. It relies on [Wolfram Script Pages](https://github.com/JerryI/wl-wsp) framework for easier templating bringing simillar experiense if you was writting in PHP
 
 ```bash
@@ -57,21 +67,24 @@ One can design anything in any share, using its favourite JS/CSS framework. Here
 
 Each time you drag a slider and click to `Submit` button, it sends POST request, recalculates a new plot and sends to a user. No JS required, just old good HTTP and reqular forms processing.
 
-### POST 🔧
+### POST
+
 This is a demonstartion of how to work with POST request. It can process only text files and text data unfortonately. When you upload the data and submit it, it redirects to the specified page, while the recived data is printed to the console
 
 ```bash
 wolframscript -f Examples/POST.wls
 ```
 
-### WSP 🔩
+### WSP
+
 This demo shows on how to work with WSP ([Wolfram Script Pages](https://github.com/JerryI/wl-wsp)) template engine and generate content based on user's request passed via URL parameters
 
 ```bash
 wolframscript -f Examples/WSP.wls
 ```
 
-*index.wsp*
+*index.wsp*  
+
 ```php
 <?wsp With[{color = $CurrentRequest["Query", "color"]}, ?>
     <div style="width:100px; height:100px; background-color: <?wsp color ?>"></div>

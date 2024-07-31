@@ -2,27 +2,19 @@
 
 PacletObject[
   <|
-    "Name" -> "KirillBelov/HTTPHandler",
-    "Description" -> "HTTP Handler",
+    "Name" -> "KirillBelov/HTTP",
+    "Description" -> "HTTP implementation",
     "Creator" -> "Kirill Belov",
     "License" -> "MIT",
     "PublisherID" -> "KirillBelov",
-    "Version" -> "1.0.8",
+    "Version" -> "1.0.0",
     "WolframVersion" -> "13+",
+    "PrimaryContext" -> "KirillBelov`HTTP`",
     "Extensions" -> {
       {
         "Kernel",
         "Root" -> "Kernel",
-        "Context" -> {
-          {
-            "KirillBelov`HTTPHandler`",
-            "HTTPHandler.wl"
-          },
-          {
-            "KirillBelov`HTTPHandler`Serialization`",
-            "Serialization.wl"
-          }
-        },
+        "Context" -> {{"KirillBelov`HTTP`", "HTTP.wl"}},
         "Symbols" -> {}
       },
       {"Documentation", "Language" -> "English"},

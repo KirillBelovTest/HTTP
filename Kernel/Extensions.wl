@@ -4,7 +4,7 @@
 (*Extensions*)
 
 
-BeginPackage["KirillBelov`HTTPHandler`Extensions`", {
+BeginPackage["KirillBelov`HTTP`Extensions`", {
     "KirillBelov`Internal`", 
     "KirillBelov`HTTPHandler`", 
     "KirillBelov`TCPServer`", 

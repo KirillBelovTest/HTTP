@@ -1,6 +1,6 @@
 (* ::Package:: *)
 
-BeginPackage["KirillBelov`HTTPHandler`Serialization`", {
+BeginPackage["KirillBelov`HTTP`Serialization`", {
     "KirillBelov`Internal`"
 }]; 
 
@@ -22,6 +22,9 @@ $HTTPDeserializers::usage =
 
 
 Begin["`Private`"]; 
+
+
+(*Main deserializer*)
 
 
 HTTPDeserialize[request_Association?AssociationQ] := 
@@ -194,25 +197,27 @@ Module[{extension, contentType, contentLength},
 
     <|
         "Headers" -> <|
-            "Content-Type" -> contentType
+
         |>, 
-        "Body" -> ReadByteArray[file]
+        "Body" -> ReadByteArray[file], 
+        "ContentType" -> contentType, 
+        "StatusCode" -> 200
     |>
 ]; 
 
 
 HTTPSerialize[body_String] := 
-StringToByteArray[body]; 
+body; 
 
 
 HTTPSerialize[body_ByteArray] := 
 body; 
 
 
-HTTPSerialize[data_Association] /; 
+HTTPSerialize[data_Association?AssociationQ] /; 
 KeyExistsQ[data, "Body"] := 
 Module[{$data = data}, 
-    $data["Body"] = HTTPSerialize[$data["Body"]]; 
+    $data["Body"] = HTTPSerialize[data["Body"]]; 
     $data
 ]; 
 

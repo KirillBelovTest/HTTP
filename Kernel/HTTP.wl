@@ -1,7 +1,7 @@
 (* ::Package:: *)
 
 (* ::Chapter:: *)
-(*HTTP Handler*)
+(*HTTP*)
 
 
 (*
@@ -35,18 +35,17 @@
 
 Once[If[PacletFind["KirillBelov/Internal"] === {}, PacletInstall["KirillBelov/Internal"]]]; 
 Once[If[PacletFind["KirillBelov/Objects"] === {}, PacletInstall["KirillBelov/Objects"]]]; 
-Once[If[PacletFind["KirillBelov/TCPServer"] === {}, PacletInstall["KirillBelov/TCPServer"]]]; 
+Once[If[PacletFind["KirillBelov/TCP"] === {}, PacletInstall["KirillBelov/TCP"]]]; 
 
 
-(* ::Section::Closed:: *)
+(* ::Section:: *)
 (*Begin packge*)
 
 
-BeginPackage["KirillBelov`HTTPHandler`", {
+BeginPackage["KirillBelov`HTTP`", {
 	"KirillBelov`Objects`", 
 	"KirillBelov`Internal`", 
-	"KirillBelov`TCPServer`", 
-	"KirillBelov`HTTPHandler`Serialization`"
+	"KirillBelov`TCP`"
 }]; 
 
 
@@ -91,11 +90,7 @@ With[{message = packet["DataByteArray"]},
 		(*Return: True | False*)
 		And[
 			StringLength[head] != Length[message], (* equivalent of the StringContainsQ[message, $httpEndOfHead] *)
-			StringContainsQ[head, StartOfString ~~ $httpMethods], 
-			Or[
-				StringContainsQ[head, StartOfLine ~~ "Connection: keep-alive", IgnoreCase -> True], 
-				StringContainsQ[head, StartOfLine ~~ "Connection: close", IgnoreCase -> True]
-			]
+			StringContainsQ[head, StartOfString ~~ $httpMethods ~~ " /"]
 		]
 	]
 ]; 
@@ -113,7 +108,8 @@ With[{message = packet["DataByteArray"]},
 		(*Return: _Integer*)
 		Which[
 			StringContainsQ[head, "Content-Length: ", IgnoreCase -> True], 
-				StringLength[head] + 4 + ToExpression[StringExtract[head, {"Content-Length: ", "content-length: "} -> 2, "\r\n" -> 1]], 
+				StringLength[head] + 4 + 
+				ToExpression[StringExtract[ToLowerCase[head], "content-length: " -> 2, "\r\n" -> 1]], 
 			True, 
 				Length[message]
 		]
@@ -121,8 +117,9 @@ With[{message = packet["DataByteArray"]},
 ]; 
 
 
-(* ::Section::Closed:: *)
+(* ::Section:: *)
 (*HTTPHandler*)
+
 
 (* ::Section::Closed:: *)
 (*Default message handler*)
@@ -155,7 +152,10 @@ With[{message = packet["DataByteArray"]},
 		response = createResponse[result, serializer]; 
 
 		(*Return: _String | ByteArray[]*)
-		ExportByteArray[response, "HTTPResponse"]
+		Which[
+			StringQ @ response["Body"], ExportString[response, "HTTPResponse", CharacterEncoding -> "UTF-8"], 
+			True, ExportByteArray[response, "HTTPResponse", CharacterEncoding -> "UTF-8"]
+		]
 	]
 ]; 
 
@@ -203,7 +203,7 @@ Module[{request, headBytes, head, headers, body, bodyBytes},
 
 	request["Headers"] = Association[
 		Map[Rule[#1, StringRiffle[{##2}, ":"]]& @@ Map[StringTrim]@StringSplit[#, ":"] &]@
-  		StringExtract[head, "\r\n\r\n" -> 1, "\r\n" -> 2 ;; ]
+		StringExtract[head, "\r\n\r\n" -> 1, "\r\n" -> 2 ;; ]
 	]; 
 
 	request["BodyByteArray"] = bodyBytes; 
@@ -228,7 +228,14 @@ Module[{data, body, headers, metadata},
 
 	metadata = <|
 		"ContentType" -> "text/html; charset=utf-8", 
-		"Headers" -> <|"Content-Length" -> Length[data["Body"]]|>, 
+		"Headers" -> <|
+			"Content-Length" -> Which[
+				AssociationQ[data] && KeyExistsQ[data, "Body"] && ByteArrayQ[data["Body"]], Length[data["Body"]], 
+				AssociationQ[data] && KeyExistsQ[data, "Body"] && StringQ[data["Body"]], StringLength[data["Body"]], 
+				StringQ[data], StringLength[data], 
+				ByteArrayQ[data], Length[data]
+			]
+		|>, 
 		"StatusCode" -> 200
 	|>; 
 
@@ -239,7 +246,9 @@ Module[{data, body, headers, metadata},
 		If[KeyExistsQ[data, "Body"], body = data["Body"]]; 
 	]; 
 
-	If[StringQ[data] || ByteArrayQ[data], body = data]; 
+	If[StringQ[data] || ByteArrayQ[data], 
+		body = data
+	]; 
 
 	(*Return: HTTPResponse[]*)
 	HTTPResponse[body, metadata]
@@ -285,11 +294,11 @@ bytes
 (*End private context*)
 
 
-End[]; 
+End[(*`Private`*)]; 
 
 
 (* ::Section::Closed:: *)
 (*End packet*)
 
 
-EndPackage[]; 
+EndPackage[(*Kirill`HTTP`*)]; 
