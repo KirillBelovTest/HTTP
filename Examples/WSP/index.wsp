@@ -1,3 +1,0 @@
-<?wsp With[{color = $CurrentRequest["Query", "color"]}, ?>
-    <div style="width:100px; height:100px; background-color: <?wsp color ?>"></div>
-<?wsp ] ?>

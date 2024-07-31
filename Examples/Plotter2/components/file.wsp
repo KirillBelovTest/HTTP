@@ -1,8 +1,0 @@
-<?wsp If[DirectoryQ[name], ?>
-    <a href="/?path=<?wsp FileNameToURLPath[name] ?>" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"><?wsp FileNameSplit[name]//Last ?> <span class="badge bg-primary rounded-pill">Directory</span></a>
-<?wsp , ""] ?>
-
-<?wsp If[!DirectoryQ[name], ?>
-    <a href="/view.wsp?path=<?wsp FileNameToURLPath[name] ?>" class="list-group-item list-group-item-action"><?wsp FileNameTake[name] ?></a>
-<?wsp , ""] ?>
-

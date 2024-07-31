@@ -1,9 +1,0 @@
-<?wsp 
-    If[$CurrentRequest["Method"] === "POST",
-        Print["Post data recevied!"];
-        Print[$CurrentRequest["Data"]];
-
-        $CurrentRequest["Redirect"] = "/blank.wsp";
-    ];
-    "Ok!"
-?>
