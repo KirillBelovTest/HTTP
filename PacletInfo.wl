@@ -3,7 +3,7 @@
 PacletObject[
   <|
     "Name" -> "KirillBelov/HTTP",
-    "Description" -> "HTTP implementation",
+    "Description" -> "HTTP",
     "Creator" -> "Kirill Belov",
     "License" -> "MIT",
     "PublisherID" -> "KirillBelov",

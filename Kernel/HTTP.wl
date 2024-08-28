@@ -33,9 +33,11 @@
 (*Requarements*)
 
 
-Once[If[PacletFind["KirillBelov/Internal"] === {}, PacletInstall["KirillBelov/Internal"]]]; 
-Once[If[PacletFind["KirillBelov/Objects"] === {}, PacletInstall["KirillBelov/Objects"]]]; 
-Once[If[PacletFind["KirillBelov/TCP"] === {}, PacletInstall["KirillBelov/TCP"]]]; 
+Once[Map[If[Length[PacletFind[#]] === 0, PacletInstall[#]]&][{
+	"KirillBelov/Objects", 
+	"KirillBelov/Internal", 
+	"KirillBelov/TCP"
+}]]; 
 
 
 (* ::Section:: *)
@@ -129,7 +131,9 @@ CreateType[HTTPHandler, {
 	"MessageHandler" -> <||>, 
 	"DefaultMessageHandler" -> Function[<|"Code" -> 404, "Body" -> "NotFound"|>], 
 	"Deserializer" -> <||>, 
+	"DefaultDeserailizer" -> $deserializer
 	"Serializer" -> <||>, 
+	"DefaultSerializer" -> $serializer
 	"Logger" -> None
 }]; 
 
